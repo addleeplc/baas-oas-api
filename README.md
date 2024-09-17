@@ -1,7 +1,7 @@
 # baas-oas-api
 Booking as a Service API Specification
 
-'''mermaid
+```mermaid
 sequenceDiagram
 	autonumber
 	participant U as Consumer
@@ -24,4 +24,4 @@ sequenceDiagram
 	CR-->>U: booking references schema
 	U->>BS: POST /bookings
 	BS-->>U: booking confirmation or failure reason
- '''
+ ```
