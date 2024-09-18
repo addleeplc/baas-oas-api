@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Elements in HTML</title>
+  
+    <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="specFiles.js"></script>
+  <body>
+    <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+    <script>
+    (async () => {
+      const docs = document.getElementById('docs');
+
+      <!-- // List of spec.yaml files, including online URLs
+      const specFiles = [
+        'https://raw.githubusercontent.com/addleeplc/shamrock-services-oas/master/shamrock-booking-cache-v2/spec.yaml?token=GHSAT0AAAAAACUM6ID6ZSIYNURR4ZYTBM6OZXKY3JQ'
+      ]; -->
+
+      // Function to fetch and parse YAML files
+      const fetchYaml = async (url) => {
+        const response = await fetch(url);
+        const text = await response.text();
+        return jsyaml.load(text);
+      };
+
+      // Function to fetch text content from a URL
+      const fetchText = async (url) => {
+        const response = await fetch(url);
+        return response.text();
+      };
+
+      // Fetch the Mermaid diagram and Markdown content
+      const mermaidDiagram = await fetchText('mermaidDiagram.md');
+      const overviewContent = await fetchText('overview.md');
+
+      // Fetch all spec.yaml files and merge their paths and components
+      const apiDescriptionDocument = {
+        openapi: '3.1.0',
+        info: {
+          title: 'Awesome Booking as a Service API',
+          version: '1.0.0',
+          description: `${overviewContent}\n\n${mermaidDiagram}`
+        },
+        paths: {},
+        components: {
+          schemas: {},
+          examples: {},
+          parameters: {},
+          responses: {},
+          requestBodies: {},
+          headers: {},
+          securitySchemes: {},
+          links: {},
+          callbacks: {}
+        },
+        tags: []
+      };
+
+      for (const file of specFiles) {
+        const spec = await fetchYaml(file);
+        const folderName = file.split('/').slice(-2, -1)[0];
+        apiDescriptionDocument.tags.push({ name: folderName });
+
+        // Merge paths
+        for (const path in spec.paths) {
+          if (spec.paths.hasOwnProperty(path)) {
+            if (!apiDescriptionDocument.paths[path]) {
+              apiDescriptionDocument.paths[path] = {};
+            }
+            const operations = spec.paths[path];
+            for (const method in operations) {
+              if (operations.hasOwnProperty(method)) {
+                if (!apiDescriptionDocument.paths[path][method]) {
+                  apiDescriptionDocument.paths[path][method] = operations[method];
+                } else {
+                  Object.assign(apiDescriptionDocument.paths[path][method], operations[method]);
+                }
+                apiDescriptionDocument.paths[path][method].tags = apiDescriptionDocument.paths[path][method].tags || [];
+                apiDescriptionDocument.paths[path][method].tags.push(folderName);
+              }
+            }
+          }
+        }
+
+        // Merge components
+        if (spec.components) {
+          for (const componentType in spec.components) {
+            if (spec.components.hasOwnProperty(componentType)) {
+              if (!apiDescriptionDocument.components[componentType]) {
+                apiDescriptionDocument.components[componentType] = {};
+              }
+              Object.assign(apiDescriptionDocument.components[componentType], spec.components[componentType]);
+            }
+          }
+        }
+      }
+
+      docs.apiDescriptionDocument = apiDescriptionDocument;
+    })();
+    </script>
+  </body>
+</html>

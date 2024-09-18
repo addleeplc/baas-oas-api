@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Elements in HTML</title>
+  
+    <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+  </head>
+  <body>
+    <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+    <script>
+    (async () => {
+      const docs = document.getElementById('docs');
+
+      // List of spec.yaml files, including online URLs
+      const specFiles = [
+        'https://raw.githubusercontent.com/addleeplc/shamrock-services-oas/master/shamrock-booking-cache-v2/spec.yaml?token=GHSAT0AAAAAACUM6ID6ZSIYNURR4ZYTBM6OZXKY3JQ'
+      ];
+
+      // Function to fetch and parse YAML files
+      const fetchYaml = async (url) => {
+        const response = await fetch(url);
+        const text = await response.text();
+        return jsyaml.load(text);
+      };
+
+      // Fetch all spec.yaml files and merge their paths and components
+      const apiDescriptionDocument = {
+        openapi: '3.1.0',
+        info: {
+          title: 'AdissonLee Awesome Booking as a Service API',
+          version: '1.0.0',
+          description: `This is an awesome API that provides booking as a service.
+
+\`\`\`mermaid
+sequenceDiagram
+  autonumber
+  participant U as Consumer
+  participant AS as Address Search Service
+  participant CI as Client Identity Service
+  participant PC as Product Catalogue Service
+  participant CR as Booking References Service
+  participant BS as Booking Service
+  U->>AS: POST /geocode
+  AS-->>U: address by location
+  U->>AS: POST /search
+  AS-->>U: list of matched addresses
+  U->>AS: POST /details
+  AS-->>U: address details
+  U->>CI: POST /auth
+  CI-->>U: client_id
+  U->>PC: POST /clients/{client_id}/products/cars
+  PC-->>U: list of products with estimates and availability
+  U->>CR: GET /clients/{client_id}/booking_references
+  CR-->>U: booking references schema
+  U->>BS: POST /bookings
+  BS-->>U: booking confirmation or failure reason
+\`\`\`
+          `
+        },
+        paths: {},
+        components: {
+          schemas: {},
+          examples: {},
+          parameters: {},
+          responses: {},
+          requestBodies: {},
+          headers: {},
+          securitySchemes: {},
+          links: {},
+          callbacks: {}
+        },
+        tags: []
+      };
+
+      for (const file of specFiles) {
+        const spec = await fetchYaml(file);
+        const folderName = file.split('/').slice(-2, -1)[0];
+        apiDescriptionDocument.tags.push({ name: folderName });
+
+        // Merge paths
+        for (const path in spec.paths) {
+          if (spec.paths.hasOwnProperty(path)) {
+            if (!apiDescriptionDocument.paths[path]) {
+              apiDescriptionDocument.paths[path] = {};
+            }
+            const operations = spec.paths[path];
+            for (const method in operations) {
+              if (operations.hasOwnProperty(method)) {
+                if (!apiDescriptionDocument.paths[path][method]) {
+                  apiDescriptionDocument.paths[path][method] = operations[method];
+                } else {
+                  Object.assign(apiDescriptionDocument.paths[path][method], operations[method]);
+                }
+                apiDescriptionDocument.paths[path][method].tags = apiDescriptionDocument.paths[path][method].tags || [];
+                apiDescriptionDocument.paths[path][method].tags.push(folderName);
+              }
+            }
+          }
+        }
+
+        // Merge components
+        if (spec.components) {
+          for (const componentType in spec.components) {
+            if (spec.components.hasOwnProperty(componentType)) {
+              if (!apiDescriptionDocument.components[componentType]) {
+                apiDescriptionDocument.components[componentType] = {};
+              }
+              Object.assign(apiDescriptionDocument.components[componentType], spec.components[componentType]);
+            }
+          }
+        }
+      }
+
+      docs.apiDescriptionDocument = apiDescriptionDocument;
+    })();
+    </script>
+  </body>
+</html>
