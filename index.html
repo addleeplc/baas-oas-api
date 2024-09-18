@@ -9,9 +9,28 @@
     <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="specFiles.js"></script>
+    <style>
+      .header {
+        text-align: center;
+        padding: 20px;
+      }
+      .header img {
+        border: none;
+      }
+      .content {
+        padding: 20px;
+      }
+    </style>
   </head>
   <body>
-    <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+    <div class="header">
+      <img src="https://www.addisonlee.com/wp-content/themes/addlee/assets/images/logos/logo.svg" alt="Logo" width="200" height="200">
+      <h1>BaaS API</h1>
+      <h2>Booking as a Service APIs Documentation</h2>
+    </div>
+    <div class="content">
+      <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+    </div>
     <script>
     (async () => {
       const docs = document.getElementById('docs');
@@ -48,7 +67,7 @@
         info: {
           title: 'BaaS API',
           version: '1.0.0',
-          description: `<img src="https://www.addisonlee.com/wp-content/themes/addlee/assets/images/logos/logo.svg" alt="Logo" width="200" style="border:none;">\n\n${overviewContent}\n\n${mermaidDiagram}`
+          description: `${overviewContent}\n\n${mermaidDiagram}`
         },
         servers: servers,
         paths: {},
