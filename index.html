@@ -81,7 +81,26 @@
           responses: {},
           requestBodies: {},
           headers: {},
-          securitySchemes: {},
+          securitySchemes: {
+            ApiKeyAuth: {
+              type: 'apiKey',
+              in: 'header',
+              name: 'X-API-Key'
+            },
+            OAuth2: {
+              type: 'oauth2',
+              flows: {
+                authorizationCode: {
+                  authorizationUrl: 'https://example.com/oauth/authorize',
+                  tokenUrl: 'https://example.com/oauth/token',
+                  scopes: {
+                    'read:info': 'Read information',
+                    'write:info': 'Write information'
+                  }
+                }
+              }
+            }
+          },
           links: {},
           callbacks: {}
         },
