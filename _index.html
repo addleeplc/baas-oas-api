@@ -8,17 +8,17 @@
     <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    <script src="specFiles.js"></script>
+  </head>
   <body>
     <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
     <script>
     (async () => {
       const docs = document.getElementById('docs');
 
-      <!-- // List of spec.yaml files, including online URLs
+      // List of spec.yaml files, including online URLs
       const specFiles = [
         'https://raw.githubusercontent.com/addleeplc/shamrock-services-oas/master/shamrock-booking-cache-v2/spec.yaml?token=GHSAT0AAAAAACUM6ID6ZSIYNURR4ZYTBM6OZXKY3JQ'
-      ]; -->
+      ];
 
       // Function to fetch and parse YAML files
       const fetchYaml = async (url) => {
@@ -27,23 +27,39 @@
         return jsyaml.load(text);
       };
 
-      // Function to fetch text content from a URL
-      const fetchText = async (url) => {
-        const response = await fetch(url);
-        return response.text();
-      };
-
-      // Fetch the Mermaid diagram and Markdown content
-      const mermaidDiagram = await fetchText('mermaidDiagram.md');
-      const overviewContent = await fetchText('overview.md');
-
       // Fetch all spec.yaml files and merge their paths and components
       const apiDescriptionDocument = {
         openapi: '3.1.0',
         info: {
-          title: 'Awesome Booking as a Service API',
+          title: 'AdissonLee Awesome Booking as a Service API',
           version: '1.0.0',
-          description: `${overviewContent}\n\n${mermaidDiagram}`
+          description: `This is an awesome API that provides booking as a service.
+
+\`\`\`mermaid
+sequenceDiagram
+  autonumber
+  participant U as Consumer
+  participant AS as Address Search Service
+  participant CI as Client Identity Service
+  participant PC as Product Catalogue Service
+  participant CR as Booking References Service
+  participant BS as Booking Service
+  U->>AS: POST /geocode
+  AS-->>U: address by location
+  U->>AS: POST /search
+  AS-->>U: list of matched addresses
+  U->>AS: POST /details
+  AS-->>U: address details
+  U->>CI: POST /auth
+  CI-->>U: client_id
+  U->>PC: POST /clients/{client_id}/products/cars
+  PC-->>U: list of products with estimates and availability
+  U->>CR: GET /clients/{client_id}/booking_references
+  CR-->>U: booking references schema
+  U->>BS: POST /bookings
+  BS-->>U: booking confirmation or failure reason
+\`\`\`
+          `
         },
         paths: {},
         components: {
