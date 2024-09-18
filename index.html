@@ -17,7 +17,7 @@
         font-weight: bold;
         background-color: black;
         color: white;
-        cursor: pointer;
+        cursor: pointer; /* Set cursor to pointer */
       }
       .header img {
         border: none;
@@ -33,7 +33,7 @@
       <h1>Booking as a Service APIs Documentation</h1>
     </div>
     <div class="content">
-      <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
+      <elements-api id="docs" router="hash" layout="sidebar"></elements-api> <!-- Configure elements-api -->
     </div>
     <script>
     async function fetchYaml(url) {
@@ -172,7 +172,7 @@
     (async () => {
       const docs = document.getElementById('docs');
 
-      // Fetch the Mermaid diagram and general overview content
+      // Fetch the Mermaid diagram and general overview content from root
       const mermaidDiagram = await fetchText('mermaidDiagram.md');
       const overviewContent = await fetchText('overview.md');
 
