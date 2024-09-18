@@ -1,0 +1,1656 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-booking-service",
+    "version" : "1.1"
+  },
+  "paths" : {
+    "/internal/auth/key" : {
+      "get" : {
+        "operationId" : "newKey",
+        "parameters" : [ {
+          "name" : "principal",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}" : {
+      "delete" : {
+        "operationId" : "cancel",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CancellationChargeResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "operationId" : "update",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "description" : "default response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}/cancel" : {
+      "post" : {
+        "operationId" : "cancel_1",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CancelBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CancellationChargeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}/cancel-as-fraud" : {
+      "post" : {
+        "operationId" : "cancelAsFraud",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CancelBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CancellationChargeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings" : {
+      "post" : {
+        "operationId" : "create",
+        "parameters" : [ {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/quote" : {
+      "post" : {
+        "operationId" : "quote",
+        "parameters" : [ {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuotationRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuotationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}/quote" : {
+      "patch" : {
+        "operationId" : "quote_1",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "description" : "default response",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}/reverse" : {
+      "post" : {
+        "operationId" : "reverse",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ReverseBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/booking-sessions" : {
+      "post" : {
+        "operationId" : "createBookingSession",
+        "parameters" : [ {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Response" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          }
+        }
+      },
+      "ValidationErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Adjustment" : {
+        "type" : "object",
+        "properties" : {
+          "source" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number"
+          },
+          "units" : {
+            "type" : "number"
+          }
+        }
+      },
+      "CancellationCharge" : {
+        "type" : "object",
+        "properties" : {
+          "cancellation_charge_applied" : {
+            "type" : "boolean"
+          },
+          "price" : {
+            "$ref" : "#/components/schemas/TaxedPrice"
+          }
+        }
+      },
+      "CancellationChargeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "cancellation_charge" : {
+            "$ref" : "#/components/schemas/CancellationCharge"
+          }
+        }
+      },
+      "DurationFieldType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Item" : {
+        "type" : "object",
+        "properties" : {
+          "tax" : {
+            "$ref" : "#/components/schemas/Tax"
+          },
+          "tax_rate" : {
+            "$ref" : "#/components/schemas/TaxRate"
+          },
+          "tax_amount" : {
+            "type" : "number"
+          },
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Item"
+            }
+          }
+        }
+      },
+      "Period" : {
+        "type" : "object",
+        "properties" : {
+          "seconds" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "years" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "months" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "days" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "hours" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minutes" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "millis" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "weeks" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          },
+          "values" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "period" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "periodInternal" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "fieldTypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DurationFieldType"
+            }
+          }
+        }
+      },
+      "PeriodType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ReadablePeriod" : {
+        "type" : "object",
+        "properties" : {
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          }
+        }
+      },
+      "Tax" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TaxItem" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "source" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number"
+          }
+        }
+      },
+      "TaxRate" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "PERCENTAGE", "FLAT_FEE" ]
+          },
+          "value" : {
+            "type" : "number"
+          }
+        }
+      },
+      "TaxedPrice" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "currency_code" : {
+            "type" : "string"
+          },
+          "base_fare" : {
+            "type" : "number"
+          },
+          "waiting_fare" : {
+            "type" : "number"
+          },
+          "waiting_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "adjustments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Adjustment"
+            }
+          },
+          "discount" : {
+            "type" : "number"
+          },
+          "pre_tax_total_fare" : {
+            "type" : "number"
+          },
+          "taxes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TaxItem"
+            }
+          },
+          "taxed_items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Item"
+            }
+          },
+          "total_charged" : {
+            "type" : "number"
+          },
+          "duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "distance" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "distance_units" : {
+            "type" : "string",
+            "enum" : [ "MILES", "METERS" ]
+          },
+          "base_fare_units" : {
+            "type" : "number"
+          },
+          "waiting_fare_units" : {
+            "type" : "number"
+          },
+          "adjustments_fare" : {
+            "type" : "number"
+          }
+        }
+      },
+      "CancelBookingRequest" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          },
+          "reason" : {
+            "$ref" : "#/components/schemas/Reason"
+          }
+        }
+      },
+      "Metadata" : {
+        "type" : "object"
+      },
+      "Reason" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Actor" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddressComponents" : {
+        "type" : "object",
+        "properties" : {
+          "company_name" : {
+            "type" : "string"
+          },
+          "building_number" : {
+            "type" : "string"
+          },
+          "sub_building_number" : {
+            "type" : "string"
+          },
+          "building_name" : {
+            "type" : "string"
+          },
+          "sub_building_name" : {
+            "type" : "string"
+          },
+          "street_name" : {
+            "type" : "string"
+          },
+          "postal_code" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BillingAddress" : {
+        "type" : "object",
+        "properties" : {
+          "address_line_1" : {
+            "type" : "string"
+          },
+          "address_line_2" : {
+            "type" : "string"
+          },
+          "address_line_3" : {
+            "type" : "string"
+          },
+          "address_line_4" : {
+            "type" : "string"
+          },
+          "postal_code" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Booking" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "customer" : {
+            "$ref" : "#/components/schemas/Customer"
+          },
+          "customer_reference" : {
+            "$ref" : "#/components/schemas/CustomerReference"
+          },
+          "product" : {
+            "$ref" : "#/components/schemas/Product"
+          },
+          "asap" : {
+            "type" : "boolean"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "deadline_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "time_slot_id" : {
+            "type" : "string"
+          },
+          "payment_type" : {
+            "type" : "string",
+            "enum" : [ "cash", "credit_card", "invoice" ]
+          },
+          "payment_details" : {
+            "$ref" : "#/components/schemas/PaymentDetails"
+          },
+          "stops" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Stop"
+            }
+          },
+          "as_directed" : {
+            "type" : "boolean"
+          },
+          "as_directed_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "destination_unknown" : {
+            "type" : "boolean"
+          },
+          "wait_and_return" : {
+            "type" : "boolean"
+          },
+          "passengers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Actor"
+            }
+          },
+          "number_of_passengers" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/Actor"
+          },
+          "instructions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Instruction"
+            }
+          },
+          "extra_luggage" : {
+            "type" : "boolean"
+          },
+          "extra_luggage_pieces" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "meet_and_greet" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "BookingResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          }
+        }
+      },
+      "Client" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "is_digital_profile" : {
+            "type" : "boolean"
+          },
+          "last_activity_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "CompanyReference" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreditCard" : {
+        "type" : "object",
+        "properties" : {
+          "token" : {
+            "type" : "string"
+          },
+          "tokenization_method" : {
+            "type" : "string",
+            "enum" : [ "UNKNOWN", "ADFLEX", "CYBERSOURCE" ]
+          },
+          "brand" : {
+            "type" : "string"
+          },
+          "last4" : {
+            "type" : "string"
+          },
+          "holder_name" : {
+            "type" : "string"
+          },
+          "expiry_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "billing_address" : {
+            "$ref" : "#/components/schemas/BillingAddress"
+          }
+        }
+      },
+      "CreditCardToken" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PaymentDetails"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "credit_card" : {
+              "$ref" : "#/components/schemas/CreditCard"
+            }
+          }
+        } ]
+      },
+      "Customer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CustomerReference" : {
+        "type" : "object",
+        "properties" : {
+          "account_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pin_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "client" : {
+            "$ref" : "#/components/schemas/Client"
+          },
+          "company_references" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CompanyReference"
+            }
+          }
+        }
+      },
+      "Flight" : {
+        "type" : "object",
+        "properties" : {
+          "tracking_flight" : {
+            "type" : "boolean"
+          },
+          "delay" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "airline" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "airport_code" : {
+            "type" : "string"
+          },
+          "arrival_from" : {
+            "type" : "string"
+          },
+          "terminal_code" : {
+            "type" : "string"
+          },
+          "departure_to" : {
+            "type" : "string"
+          },
+          "scheduled_eta" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Instruction" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lon" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "PaymentDetails" : {
+        "type" : "object"
+      },
+      "Product" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "service_code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Stop" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "ADDRESS", "AIRPORT", "TRAIN_STATION" ]
+          },
+          "operation" : {
+            "type" : "string",
+            "enum" : [ "pickup", "drop" ]
+          },
+          "formatted_address" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "collection_delay" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "address_components" : {
+            "$ref" : "#/components/schemas/AddressComponents"
+          },
+          "flight" : {
+            "$ref" : "#/components/schemas/Flight"
+          },
+          "actor" : {
+            "$ref" : "#/components/schemas/Actor"
+          },
+          "instructions" : {
+            "type" : "string"
+          },
+          "meeting_point" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreateBookingRequest" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          },
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "custom_actions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomAction"
+            }
+          }
+        }
+      },
+      "CustomAction" : {
+        "required" : [ "@type" ],
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          }
+        },
+        "discriminator" : {
+          "propertyName" : "@type"
+        }
+      },
+      "Discount" : {
+        "type" : "object",
+        "properties" : {
+          "offer" : {
+            "$ref" : "#/components/schemas/Offer"
+          }
+        }
+      },
+      "DiscountClientFare" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CustomAction"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "discount" : {
+              "$ref" : "#/components/schemas/Discount"
+            }
+          }
+        } ]
+      },
+      "Offer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "OverrideConstraints" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CustomAction"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "constraint_overrides" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "enum" : [ "ADDRESS_BANNED", "PICKUP_CIRCUIT_LOCKED", "SERVICE_RESTRICTIONS_FAILED", "JOB_RESTRICTIONS_FAILED", "TELEPHONE_BANNED", "EMAIL_BANNED", "LEAD_TIME_FAILED", "JOB_DATE_TOO_CLOSE_TO_NOW", "LEAD_TIME_FAILED_RESTRICTED_UPDATE", "DECISION_MANAGER_FRAUD", "ACCOUNT_ON_HOLD", "CREDIT_CARD_BANNED", "SMARTPHONE_DEVICE_BANNED", "INTEGRATOR_JOB_RESTRICTIONS_FAILED" ]
+              }
+            }
+          }
+        } ]
+      },
+      "Availability" : {
+        "type" : "object",
+        "properties" : {
+          "available" : {
+            "type" : "boolean"
+          },
+          "lead_time" : {
+            "$ref" : "#/components/schemas/Period"
+          }
+        }
+      },
+      "Price" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "currency_code" : {
+            "type" : "string"
+          },
+          "base_fare" : {
+            "type" : "number"
+          },
+          "waiting_fare" : {
+            "type" : "number"
+          },
+          "waiting_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "adjustments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Adjustment"
+            }
+          },
+          "discount" : {
+            "type" : "number"
+          },
+          "taxes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TaxItem"
+            }
+          },
+          "total_charged" : {
+            "type" : "number"
+          },
+          "duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "distance" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "distance_units" : {
+            "type" : "string",
+            "enum" : [ "MILES", "METERS" ]
+          },
+          "base_fare_units" : {
+            "type" : "number"
+          },
+          "waiting_fare_units" : {
+            "type" : "number"
+          },
+          "adjustments_fare" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Quotation" : {
+        "type" : "object",
+        "properties" : {
+          "availability" : {
+            "$ref" : "#/components/schemas/Availability"
+          },
+          "price" : {
+            "$ref" : "#/components/schemas/Price"
+          }
+        }
+      },
+      "QuotationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "quotation" : {
+            "$ref" : "#/components/schemas/Quotation"
+          }
+        }
+      },
+      "QuotationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          },
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          }
+        }
+      },
+      "UpdateBookingRequest" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          },
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "custom_actions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomAction"
+            }
+          }
+        }
+      },
+      "ReverseBookingRequest" : {
+        "type" : "object",
+        "properties" : {
+          "metadata" : {
+            "$ref" : "#/components/schemas/Metadata"
+          }
+        }
+      },
+      "Data" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "number" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Session" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/Data"
+          }
+        }
+      },
+      "SessionResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "session" : {
+            "$ref" : "#/components/schemas/Session"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

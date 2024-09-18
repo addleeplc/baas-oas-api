@@ -1,0 +1,924 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-booking-cache",
+    "version" : "2.4"
+  },
+  "paths" : {
+    "/v2/booking" : {
+      "get" : {
+        "operationId" : "getJob",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pid",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/bookings" : {
+      "get" : {
+        "operationId" : "getJobs",
+        "parameters" : [ {
+          "name" : "circuit",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Actor" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddressComponents" : {
+        "type" : "object",
+        "properties" : {
+          "postal_code" : {
+            "type" : "string"
+          },
+          "street_name" : {
+            "type" : "string"
+          },
+          "building_number" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "region" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Adjustment" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Booking" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "priority" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "booking_channel" : {
+            "type" : "string"
+          },
+          "booking_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "customer" : {
+            "$ref" : "#/components/schemas/Customer"
+          },
+          "customer_reference" : {
+            "$ref" : "#/components/schemas/CustomerReference"
+          },
+          "product" : {
+            "$ref" : "#/components/schemas/Product"
+          },
+          "number_of_passengers" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "payment_type" : {
+            "type" : "string"
+          },
+          "credit_card" : {
+            "$ref" : "#/components/schemas/CreditCard"
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/Contact"
+          },
+          "asap" : {
+            "type" : "boolean"
+          },
+          "appearance_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "date_confirmed" : {
+            "type" : "boolean"
+          },
+          "pickup_time_estimate" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "deadline_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "stops" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Stop"
+            }
+          },
+          "as_directed" : {
+            "type" : "boolean"
+          },
+          "destination_unknown" : {
+            "type" : "boolean"
+          },
+          "wait_and_return" : {
+            "type" : "boolean"
+          },
+          "extra_luggage" : {
+            "type" : "boolean"
+          },
+          "meet_and_greet" : {
+            "type" : "boolean"
+          },
+          "passengers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Actor"
+            }
+          },
+          "instructions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Instruction"
+            }
+          },
+          "price" : {
+            "$ref" : "#/components/schemas/Price"
+          },
+          "adjustments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Adjustment"
+            }
+          },
+          "promo" : {
+            "type" : "string"
+          },
+          "driver" : {
+            "$ref" : "#/components/schemas/Driver"
+          },
+          "preallocated_driver" : {
+            "$ref" : "#/components/schemas/Driver"
+          },
+          "prebooked_by_driver" : {
+            "$ref" : "#/components/schemas/Driver"
+          },
+          "allocation_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "completion_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "cancellation_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "cancelled_with_charge" : {
+            "type" : "boolean"
+          },
+          "waiting_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "journey_distance" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "journey_distance_units" : {
+            "type" : "string",
+            "enum" : [ "miles", "meters" ]
+          },
+          "journey_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "integrator" : {
+            "$ref" : "#/components/schemas/ThirdParty"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/ThirdParty"
+          },
+          "as_directed_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "execution_status" : {
+            "type" : "string",
+            "enum" : [ "UNKNOWN", "BOOKED", "WAITING_ALLOC", "ALLOCATED", "CONFIRMED", "ON_WAY", "AT_PICKUP", "ON_BOARD", "DONE", "CANCELLED", "ON_HOLD" ]
+          },
+          "zone_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }
+      },
+      "BookingReference" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "account_id" : {
+            "type" : "string"
+          },
+          "account_name" : {
+            "type" : "string"
+          },
+          "product" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BookingResponse" : {
+        "type" : "object",
+        "properties" : {
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          }
+        }
+      },
+      "Client" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CompanyReference" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Contact" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreditCard" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "masked_pan" : {
+            "type" : "string"
+          },
+          "holder_name" : {
+            "type" : "string"
+          },
+          "expiry_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Customer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CustomerReference" : {
+        "type" : "object",
+        "properties" : {
+          "client" : {
+            "$ref" : "#/components/schemas/Client"
+          },
+          "company_references" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CompanyReference"
+            }
+          }
+        }
+      },
+      "Driver" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "callsign" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "mobile_telephone" : {
+            "type" : "string"
+          },
+          "licence_number" : {
+            "type" : "string"
+          },
+          "contract" : {
+            "$ref" : "#/components/schemas/DriverContract"
+          },
+          "vehicle" : {
+            "$ref" : "#/components/schemas/Vehicle"
+          }
+        }
+      },
+      "DriverContract" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "$ref" : "#/components/schemas/DriverContractType"
+          }
+        }
+      },
+      "DriverContractType" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "DurationFieldType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Flight" : {
+        "type" : "object",
+        "properties" : {
+          "airline" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "airport_code" : {
+            "type" : "string"
+          },
+          "terminal_code" : {
+            "type" : "string"
+          },
+          "arrival_from" : {
+            "type" : "string"
+          },
+          "departure_to" : {
+            "type" : "string"
+          },
+          "scheduled_eta" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Instruction" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lon" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "accurancy" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "Period" : {
+        "type" : "object",
+        "properties" : {
+          "seconds" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "years" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "months" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "days" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "hours" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minutes" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "millis" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "weeks" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          },
+          "values" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "period" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "periodInternal" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "fieldTypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DurationFieldType"
+            }
+          }
+        }
+      },
+      "PeriodType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Price" : {
+        "type" : "object",
+        "properties" : {
+          "currency_code" : {
+            "type" : "string"
+          },
+          "base_fare" : {
+            "type" : "number"
+          },
+          "waiting_fare" : {
+            "type" : "number"
+          },
+          "waiting_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "adjustments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Adjustment"
+            }
+          },
+          "discount" : {
+            "type" : "number"
+          },
+          "taxes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Tax"
+            }
+          },
+          "total_charged" : {
+            "type" : "number"
+          },
+          "duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "distance" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "distance_units" : {
+            "type" : "string",
+            "enum" : [ "miles", "meters" ]
+          },
+          "base_fare_units" : {
+            "type" : "number"
+          },
+          "waiting_fare_units" : {
+            "type" : "number"
+          },
+          "adjustments_fare" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Product" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ReadablePeriod" : {
+        "type" : "object",
+        "properties" : {
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          }
+        }
+      },
+      "Station" : {
+        "type" : "object"
+      },
+      "Stop" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "ADDRESS", "AIRPORT", "TRAIN_STATION" ]
+          },
+          "order" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "operation" : {
+            "type" : "string"
+          },
+          "tag" : {
+            "type" : "string"
+          },
+          "formatted_address" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "address_components" : {
+            "$ref" : "#/components/schemas/AddressComponents"
+          },
+          "station" : {
+            "$ref" : "#/components/schemas/Station"
+          },
+          "flight" : {
+            "$ref" : "#/components/schemas/Flight"
+          },
+          "collection_delay" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "actor" : {
+            "$ref" : "#/components/schemas/Actor"
+          },
+          "meeting_point" : {
+            "type" : "string"
+          },
+          "instructions" : {
+            "type" : "string"
+          },
+          "completion_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "arrival_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "place" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Tax" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number"
+          }
+        }
+      },
+      "ThirdParty" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "booking_ref" : {
+            "$ref" : "#/components/schemas/BookingReference"
+          },
+          "driver_ref" : {
+            "$ref" : "#/components/schemas/Driver"
+          }
+        }
+      },
+      "ValidationErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Vehicle" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "registration_plate" : {
+            "type" : "string"
+          },
+          "vehicle_model" : {
+            "type" : "string"
+          },
+          "manufacturer" : {
+            "type" : "string"
+          },
+          "model" : {
+            "type" : "string"
+          },
+          "colour" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BookingsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "bookings" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Booking"
+            }
+          },
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
