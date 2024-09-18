@@ -1,0 +1,10 @@
+[
+    {
+        "url": "http://localhost:80",
+        "description": "Development server"
+    },
+    {
+        "url": "http://localhost:8888",
+        "description": "Another server..."
+    }
+]

@@ -23,6 +23,12 @@
         return jsyaml.load(text);
       };
 
+      // Function to fetch JSON content from a URL
+      const fetchJson = async (url) => {
+        const response = await fetch(url);
+        return response.json();
+      };
+
       // Function to fetch text content from a URL
       const fetchText = async (url) => {
         const response = await fetch(url);
@@ -33,6 +39,9 @@
       const mermaidDiagram = await fetchText('mermaidDiagram.md');
       const overviewContent = await fetchText('overview.md');
 
+      // Fetch the servers configuration
+      const servers = await fetchJson('servers.json');
+
       // Fetch all spec.yaml files and merge their paths and components
       const apiDescriptionDocument = {
         openapi: '3.1.0',
@@ -41,6 +50,7 @@
           version: '1.0.0',
           description: `${overviewContent}\n\n${mermaidDiagram}`
         },
+        servers: servers,
         paths: {},
         components: {
           schemas: {},
