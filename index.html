@@ -9,16 +9,12 @@
     <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
     <script src="specFiles.js"></script>
+  </head>
   <body>
     <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
     <script>
     (async () => {
       const docs = document.getElementById('docs');
-
-      // List of spec.yaml files, including online URLs
-      <!-- const specFiles = [
-        'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-service-v1/spec.yaml'
-      ]; -->
 
       // Function to fetch and parse YAML files
       const fetchYaml = async (url) => {
