@@ -36,70 +36,6 @@
       <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
     </div>
     <script>
-    async function loadRootOverview() {
-      const docs = document.getElementById('docs');
-
-      // Fetch the Mermaid diagram and general overview content
-      const mermaidDiagram = await fetchText('mermaidDiagram.md');
-      const overviewContent = await fetchText('overview.md');
-
-      // Fetch the servers configuration
-      const servers = await fetchJson('servers.json');
-
-      // Create the root overview apiDescriptionDocument
-      const rootApiDescriptionDocument = {
-        openapi: '3.1.0',
-        info: {
-          title: 'BaaS API',
-          version: '1.0.0',
-          description: `${overviewContent}\n\n${mermaidDiagram}`
-        },
-        servers: servers,
-        paths: {},
-        components: {
-          schemas: {},
-          examples: {},
-          parameters: {},
-          responses: {},
-          requestBodies: {},
-          headers: {},
-          securitySchemes: {
-            ApiKeyAuth: {
-              type: 'apiKey',
-              in: 'header',
-              name: 'X-API-Key'
-            },
-            OAuth2: {
-              type: 'oauth2',
-              flows: {
-                authorizationCode: {
-                  authorizationUrl: 'https://example.com/oauth/authorize',
-                  tokenUrl: 'https://example.com/oauth/token',
-                  scopes: {
-                    'read:info': 'Read information',
-                    'write:info': 'Write information'
-                  }
-                }
-              }
-            }
-          },
-          links: {},
-          callbacks: {}
-        },
-        security: [
-          {
-            ApiKeyAuth: []
-          },
-          {
-            OAuth2: ['read:info', 'write:info']
-          }
-        ],
-        tags: []
-      };
-
-      docs.apiDescriptionDocument = rootApiDescriptionDocument;
-    }
-
     async function fetchYaml(url) {
       const response = await fetch(url);
       const text = await response.text();
@@ -116,17 +52,7 @@
       return response.text();
     }
 
-    (async () => {
-      const docs = document.getElementById('docs');
-
-      // Fetch the Mermaid diagram and general overview content
-      const mermaidDiagram = await fetchText('mermaidDiagram.md');
-      const overviewContent = await fetchText('overview.md');
-
-      // Fetch the servers configuration
-      const servers = await fetchJson('servers.json');
-
-      // Fetch all spec.yaml files and merge their paths and components
+    async function createApiDescriptionDocument(overviewContent, mermaidDiagram, servers, specFiles) {
       const apiDescriptionDocument = {
         openapi: '3.1.0',
         info: {
@@ -180,7 +106,6 @@
       for (const file of specFiles) {
         const spec = await fetchYaml(file);
         const folderName = file.split('/').slice(-2, -1)[0];
-        apiDescriptionDocument.tags.push({ name: folderName });
 
         // Fetch the specific overview content for the service
         const serviceOverviewContent = await fetchText(`${folderName}/overview.md`);
@@ -224,6 +149,38 @@
           }
         }
       }
+
+      return apiDescriptionDocument;
+    }
+
+    async function loadRootOverview() {
+      const docs = document.getElementById('docs');
+
+      // Fetch the Mermaid diagram and general overview content
+      const mermaidDiagram = await fetchText('mermaidDiagram.md');
+      const overviewContent = await fetchText('overview.md');
+
+      // Fetch the servers configuration
+      const servers = await fetchJson('servers.json');
+
+      // Create the root overview apiDescriptionDocument
+      const rootApiDescriptionDocument = await createApiDescriptionDocument(overviewContent, mermaidDiagram, servers, specFiles);
+
+      docs.apiDescriptionDocument = rootApiDescriptionDocument;
+    }
+
+    (async () => {
+      const docs = document.getElementById('docs');
+
+      // Fetch the Mermaid diagram and general overview content
+      const mermaidDiagram = await fetchText('mermaidDiagram.md');
+      const overviewContent = await fetchText('overview.md');
+
+      // Fetch the servers configuration
+      const servers = await fetchJson('servers.json');
+
+      // Create the apiDescriptionDocument
+      const apiDescriptionDocument = await createApiDescriptionDocument(overviewContent, mermaidDiagram, servers, specFiles);
 
       docs.apiDescriptionDocument = apiDescriptionDocument;
     })();
