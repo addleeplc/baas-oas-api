@@ -17,6 +17,7 @@
         font-weight: bold;
         background-color: black;
         color: white;
+        cursor: pointer;
       }
       .header img {
         border: none;
@@ -27,7 +28,7 @@
     </style>
   </head>
   <body>
-    <div class="header">
+    <div class="header" onclick="loadRootOverview()">
       <img src="https://www.addisonlee.com/wp-content/themes/addlee/assets/images/logos/logo.svg" alt="Logo" width="200" height="200">
       <h1>Booking as a Service APIs Documentation</h1>
     </div>
@@ -35,29 +36,90 @@
       <elements-api id="docs" router="hash" layout="sidebar"></elements-api>
     </div>
     <script>
+    async function loadRootOverview() {
+      const docs = document.getElementById('docs');
+
+      // Fetch the Mermaid diagram and general overview content
+      const mermaidDiagram = await fetchText('mermaidDiagram.md');
+      const overviewContent = await fetchText('overview.md');
+
+      // Fetch the servers configuration
+      const servers = await fetchJson('servers.json');
+
+      // Create the root overview apiDescriptionDocument
+      const rootApiDescriptionDocument = {
+        openapi: '3.1.0',
+        info: {
+          title: 'BaaS API',
+          version: '1.0.0',
+          description: `${overviewContent}\n\n${mermaidDiagram}`
+        },
+        servers: servers,
+        paths: {},
+        components: {
+          schemas: {},
+          examples: {},
+          parameters: {},
+          responses: {},
+          requestBodies: {},
+          headers: {},
+          securitySchemes: {
+            ApiKeyAuth: {
+              type: 'apiKey',
+              in: 'header',
+              name: 'X-API-Key'
+            },
+            OAuth2: {
+              type: 'oauth2',
+              flows: {
+                authorizationCode: {
+                  authorizationUrl: 'https://example.com/oauth/authorize',
+                  tokenUrl: 'https://example.com/oauth/token',
+                  scopes: {
+                    'read:info': 'Read information',
+                    'write:info': 'Write information'
+                  }
+                }
+              }
+            }
+          },
+          links: {},
+          callbacks: {}
+        },
+        security: [
+          {
+            ApiKeyAuth: []
+          },
+          {
+            OAuth2: ['read:info', 'write:info']
+          }
+        ],
+        tags: []
+      };
+
+      docs.apiDescriptionDocument = rootApiDescriptionDocument;
+    }
+
+    async function fetchYaml(url) {
+      const response = await fetch(url);
+      const text = await response.text();
+      return jsyaml.load(text);
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url);
+      return response.json();
+    }
+
+    async function fetchText(url) {
+      const response = await fetch(url);
+      return response.text();
+    }
+
     (async () => {
       const docs = document.getElementById('docs');
 
-      // Function to fetch and parse YAML files
-      const fetchYaml = async (url) => {
-        const response = await fetch(url);
-        const text = await response.text();
-        return jsyaml.load(text);
-      };
-
-      // Function to fetch JSON content from a URL
-      const fetchJson = async (url) => {
-        const response = await fetch(url);
-        return response.json();
-      };
-
-      // Function to fetch text content from a URL
-      const fetchText = async (url) => {
-        const response = await fetch(url);
-        return response.text();
-      };
-
-      // Fetch the Mermaid diagram and Markdown content
+      // Fetch the Mermaid diagram and general overview content
       const mermaidDiagram = await fetchText('mermaidDiagram.md');
       const overviewContent = await fetchText('overview.md');
 
@@ -119,6 +181,15 @@
         const spec = await fetchYaml(file);
         const folderName = file.split('/').slice(-2, -1)[0];
         apiDescriptionDocument.tags.push({ name: folderName });
+
+        // Fetch the specific overview content for the service
+        const serviceOverviewContent = await fetchText(`${folderName}/overview.md`);
+
+        // Add a tag description with the specific overview content
+        apiDescriptionDocument.tags.push({
+          name: folderName,
+          description: serviceOverviewContent
+        });
 
         // Merge paths
         for (const path in spec.paths) {
