@@ -172,7 +172,7 @@
     (async () => {
       const docs = document.getElementById('docs');
 
-      // Fetch the Mermaid diagram and general overview content
+      // Fetch the Mermaid diagram and general overview content from root
       const mermaidDiagram = await fetchText('mermaidDiagram.md');
       const overviewContent = await fetchText('overview.md');
 

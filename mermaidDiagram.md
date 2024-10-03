@@ -1,7 +1,7 @@
 ```mermaid
 sequenceDiagram
   autonumber
-  participant U as Consumer
+  participant U as API Consumer
   participant AS as Address Search Service
   participant CI as Client Identity Service
   participant PC as Product Catalogue Service
