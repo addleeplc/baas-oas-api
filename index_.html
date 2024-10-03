@@ -141,9 +141,9 @@
         if (spec.components) {
           for (const componentType in spec.components) {
             if (spec.components.hasOwnProperty(componentType)) {
-              if (!apiDescriptionDocument.components[componentType]) {
+              <!-- if (!apiDescriptionDocument.components[componentType]) {
                 apiDescriptionDocument.components[componentType] = {};
-              }
+              } -->
               Object.assign(apiDescriptionDocument.components[componentType], spec.components[componentType]);
             }
           }
