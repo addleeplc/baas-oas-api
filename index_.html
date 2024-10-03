@@ -103,6 +103,12 @@
         tags: []
       };
 
+      // Add root overview content
+      apiDescriptionDocument.tags.push({
+        name: 'Overview',
+        description: overviewContent
+      });
+
       for (const file of specFiles) {
         const spec = await fetchYaml(file);
         const folderName = file.split('/').slice(-2, -1)[0];
@@ -141,9 +147,9 @@
         if (spec.components) {
           for (const componentType in spec.components) {
             if (spec.components.hasOwnProperty(componentType)) {
-              <!-- if (!apiDescriptionDocument.components[componentType]) {
+              if (!apiDescriptionDocument.components[componentType]) {
                 apiDescriptionDocument.components[componentType] = {};
-              } -->
+              }
               Object.assign(apiDescriptionDocument.components[componentType], spec.components[componentType]);
             }
           }
