@@ -99,28 +99,11 @@
           {
             OAuth2: ['read:info', 'write:info']
           }
-        ],
-        tags: []
+        ]
       };
-
-      // Add root overview content
-      apiDescriptionDocument.tags.push({
-        name: 'Overview',
-        description: overviewContent
-      });
 
       for (const file of specFiles) {
         const spec = await fetchYaml(file);
-        const folderName = file.split('/').slice(-2, -1)[0];
-
-        // Fetch the specific overview content for the service
-        const serviceOverviewContent = await fetchText(`${folderName}/overview.md`);
-
-        // Add a tag description with the specific overview content
-        apiDescriptionDocument.tags.push({
-          name: folderName,
-          description: serviceOverviewContent
-        });
 
         // Merge paths
         for (const path in spec.paths) {
@@ -136,8 +119,6 @@
                 } else {
                   Object.assign(apiDescriptionDocument.paths[path][method], operations[method]);
                 }
-                apiDescriptionDocument.paths[path][method].tags = apiDescriptionDocument.paths[path][method].tags || [];
-                apiDescriptionDocument.paths[path][method].tags.push(folderName);
               }
             }
           }
@@ -178,7 +159,7 @@
     (async () => {
       const docs = document.getElementById('docs');
 
-      // Fetch the Mermaid diagram and general overview content from root
+      // Fetch the Mermaid diagram and general overview content
       const mermaidDiagram = await fetchText('mermaidDiagram.md');
       const overviewContent = await fetchText('overview.md');
 

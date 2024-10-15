@@ -23,4 +23,4 @@ sequenceDiagram
   CR-->>U: booking references schema
   U->>BS: POST /bookings
   BS-->>U: booking confirmation or failure reason
-  U-->>E: Last step 
+  U-->>ED: Last step 
