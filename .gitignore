@@ -131,4 +131,6 @@ dist
 
 # Python venv and other scripts
 .venv
+.venv/*
+*.py
 
