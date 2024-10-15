@@ -1,0 +1,2212 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-booking-receipt-service",
+    "version" : "3.22"
+  },
+  "paths" : {
+    "/bookings/{booking_id}/addons/{addon_id}/receipt/eml" : {
+      "get" : {
+        "operationId" : "getById",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/octet-stream" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/receipt/eml" : {
+      "get" : {
+        "operationId" : "getById_1",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/octet-stream" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/receipt/eml" : {
+      "get" : {
+        "operationId" : "getByPid",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/octet-stream" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/addons/{addon_id}/receipt/eml" : {
+      "get" : {
+        "operationId" : "getByPid_1",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/octet-stream" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/addons/{addon_id}/receipt/html" : {
+      "get" : {
+        "operationId" : "getById_2",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/receipt/html" : {
+      "get" : {
+        "operationId" : "getById_3",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/receipt/html" : {
+      "get" : {
+        "operationId" : "getByPid_2",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/addons/{addon_id}/receipt/html" : {
+      "get" : {
+        "operationId" : "getByPid_3",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/receipt/print" : {
+      "get" : {
+        "operationId" : "getById_4",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/transactions/{transaction_id}/receipt/print" : {
+      "get" : {
+        "operationId" : "getById_5",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/non-transactions/receipt/print" : {
+      "get" : {
+        "operationId" : "getByIdNoneTransactions",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/non-transactions/receipt/print" : {
+      "get" : {
+        "operationId" : "getByPidNoneTransactions",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/transactions/{transaction_id}/receipt/print" : {
+      "get" : {
+        "operationId" : "getByPid_4",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_pid}/receipt/print" : {
+      "get" : {
+        "operationId" : "getByPid_5",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/receipt/pdf" : {
+      "get" : {
+        "operationId" : "getById_6",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/pdf" : { },
+              "application/json" : { }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{booking_id}/addons/{addon_id}/receipt/pdf" : {
+      "get" : {
+        "operationId" : "getById_7",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/pdf" : { },
+              "application/json" : { }
+            }
+          }
+        }
+      }
+    },
+    "/resources/{resource_id}" : {
+      "get" : {
+        "operationId" : "resource",
+        "parameters" : [ {
+          "name" : "resource_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "*/*" : { }
+            }
+          }
+        }
+      }
+    },
+    "/encrypt" : {
+      "get" : {
+        "operationId" : "encrypt",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addons_id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "till_date",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/receipt/booking/{bookingKey}" : {
+      "get" : {
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "bookingKey",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : { },
+              "application/json" : { }
+            }
+          }
+        }
+      }
+    },
+    "/v2/bookings/{booking_id}/addons/{addon_id}/receipt" : {
+      "get" : {
+        "operationId" : "getById_8",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "sendById_1",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/bookings/{booking_id}/receipt" : {
+      "get" : {
+        "operationId" : "getById_9",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "sendById",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/bookings/{booking_pid}/addons/{addon_id}/receipt" : {
+      "get" : {
+        "operationId" : "getByPid_6",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "sendByPid",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "addon_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/bookings/{booking_pid}/receipt" : {
+      "get" : {
+        "operationId" : "getByPid_7",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "sendByPid_1",
+        "parameters" : [ {
+          "name" : "booking_pid",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "attachTransactions",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "attachSeparately",
+          "in" : "query",
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EmailResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Response" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          }
+        }
+      },
+      "ValidationErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Attachment" : {
+        "type" : "object",
+        "properties" : {
+          "filename" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "format" : "byte"
+            }
+          },
+          "content_type" : {
+            "type" : "string"
+          },
+          "content_id" : {
+            "type" : "string"
+          },
+          "disposition" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Email" : {
+        "type" : "object",
+        "properties" : {
+          "headers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PropertyPair"
+            }
+          },
+          "subject" : {
+            "type" : "string"
+          },
+          "datetime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "encoding" : {
+            "type" : "string"
+          },
+          "from" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Address"
+            }
+          },
+          "to" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Address"
+            }
+          },
+          "bcc" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Address"
+            }
+          },
+          "parts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Part"
+            }
+          },
+          "attachments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Attachment"
+            }
+          }
+        }
+      },
+      "EmailResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "email" : {
+            "$ref" : "#/components/schemas/Email"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "message_id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Part" : {
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          },
+          "content_type" : {
+            "type" : "string"
+          },
+          "headers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PropertyPair"
+            }
+          }
+        }
+      },
+      "PropertyPair" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

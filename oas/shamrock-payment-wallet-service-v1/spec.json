@@ -1,0 +1,919 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-payment-wallet-service",
+    "version" : "1.0"
+  },
+  "paths" : {
+    "/v1/payment-intents/{payment_intent_id}/complete" : {
+      "post" : {
+        "operationId" : "completePaymentIntent",
+        "parameters" : [ {
+          "name" : "payment_intent_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentIntentCompleteRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{owner_class}/{owner_id}/payment-intents" : {
+      "post" : {
+        "operationId" : "createPaymentIntent",
+        "parameters" : [ {
+          "name" : "owner_class",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "owner_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentIntentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentIntentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-intents/{gateway_id}/config" : {
+      "get" : {
+        "operationId" : "getConfig",
+        "parameters" : [ {
+          "name" : "gateway_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    },
+    "/v1/{owner_class}/{owner_id}/tokens/{token_id}" : {
+      "get" : {
+        "operationId" : "getToken",
+        "parameters" : [ {
+          "name" : "owner_class",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "owner_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "token_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "createToken",
+        "parameters" : [ {
+          "name" : "owner_class",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "owner_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "token_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "operationId" : "deleteToken",
+        "parameters" : [ {
+          "name" : "owner_class",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "owner_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "token_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{owner_class}/{owner_id}/tokens" : {
+      "get" : {
+        "operationId" : "getTokens",
+        "parameters" : [ {
+          "name" : "owner_class",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "owner_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TokensResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BillingAddress" : {
+        "type" : "object",
+        "properties" : {
+          "address_line_1" : {
+            "type" : "string"
+          },
+          "address_line_2" : {
+            "type" : "string"
+          },
+          "postal_code" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Card" : {
+        "type" : "object",
+        "properties" : {
+          "brand" : {
+            "type" : "string"
+          },
+          "last4" : {
+            "type" : "string"
+          },
+          "expiry_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "holder_name" : {
+            "type" : "string"
+          },
+          "billing_address" : {
+            "$ref" : "#/components/schemas/BillingAddress"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GatewayToken" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentMethod" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "card" : {
+            "$ref" : "#/components/schemas/Card"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentToken" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "off_session_only" : {
+            "type" : "boolean"
+          },
+          "payment_method" : {
+            "$ref" : "#/components/schemas/PaymentMethod"
+          },
+          "descriptor" : {
+            "type" : "string"
+          },
+          "gateway_token" : {
+            "$ref" : "#/components/schemas/GatewayToken"
+          }
+        }
+      },
+      "Token" : {
+        "type" : "object",
+        "properties" : {
+          "payment_token" : {
+            "$ref" : "#/components/schemas/PaymentToken"
+          },
+          "usage_statistics" : {
+            "$ref" : "#/components/schemas/UsageStatistics"
+          }
+        }
+      },
+      "TokenResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "token" : {
+            "$ref" : "#/components/schemas/Token"
+          }
+        }
+      },
+      "UsageStatistics" : {
+        "type" : "object",
+        "properties" : {
+          "date_added" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "date_of_use" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "number_of_uses" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "ValidationErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "GatewayPaymentIntent" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "client_secret" : {
+            "type" : "string"
+          },
+          "ephemeral_key" : {
+            "type" : "string"
+          },
+          "publishable_api_key" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentIntentCompleteRequest" : {
+        "type" : "object",
+        "properties" : {
+          "gateway_payment_intent" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntent"
+          }
+        }
+      },
+      "PaymentIntent" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "gateway_payment_intent" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntent"
+          }
+        }
+      },
+      "PaymentIntentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "payment_intent" : {
+            "$ref" : "#/components/schemas/PaymentIntent"
+          }
+        }
+      },
+      "Customer" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "identifiers" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "GatewayPaymentIntentSetup" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "payment_method_configuration" : {
+            "type" : "string"
+          },
+          "customer" : {
+            "$ref" : "#/components/schemas/Customer"
+          }
+        }
+      },
+      "PaymentIntentRequest" : {
+        "type" : "object",
+        "properties" : {
+          "moto" : {
+            "type" : "boolean"
+          },
+          "gateway_payment_intent_setup" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntentSetup"
+          }
+        }
+      },
+      "Config" : {
+        "type" : "object",
+        "properties" : {
+          "publishable_api_key" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ConfigResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "config" : {
+            "$ref" : "#/components/schemas/Config"
+          }
+        }
+      },
+      "Response" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          }
+        }
+      },
+      "TokensResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "tokens" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Token"
+            }
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

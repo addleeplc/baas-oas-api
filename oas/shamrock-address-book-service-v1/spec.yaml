@@ -1,0 +1,662 @@
+openapi: 3.0.1
+info:
+  title: shamrock-address-book-service
+  version: "1.0"
+paths:
+  /v1/accounts/{account_id}/addresses:
+    get:
+      operationId: getAccountAddresses
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    post:
+      operationId: createAccountAddress
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address_Standard'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_Standard'
+  /v1/accounts/{account_id}/addresses/search:
+    get:
+      operationId: search
+      parameters:
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: address
+        in: query
+        schema:
+          type: string
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: postcode
+        in: query
+        schema:
+          type: string
+      - name: used_from
+        in: query
+        schema:
+          type: string
+      - name: used_till
+        in: query
+        schema:
+          type: string
+      - name: tag
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v1/addresses/{address_id}:
+    get:
+      operationId: getAddress
+      parameters:
+      - name: address_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_WithStatistics'
+    delete:
+      operationId: deleteAddress
+      parameters:
+      - name: address_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    patch:
+      operationId: updateAddress
+      parameters:
+      - name: address_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressUpdateRequest_WithStatistics'
+      responses:
+        default:
+          description: default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_WithStatistics'
+  /v1/clients/{client_id}/addresses:
+    get:
+      operationId: getClientAddresses
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    post:
+      operationId: createClientAddress
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address_Standard'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_Standard'
+  /v1/clients/{client_id}/addresses/search:
+    get:
+      operationId: search_1
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          pattern: "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\\
+            -[0-9a-fA-F]{12}"
+          type: string
+          format: uuid
+      - name: address
+        in: query
+        schema:
+          type: string
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: postcode
+        in: query
+        schema:
+          type: string
+      - name: used_from
+        in: query
+        schema:
+          type: string
+      - name: used_till
+        in: query
+        schema:
+          type: string
+      - name: tag
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+components:
+  schemas:
+    Error_Standard:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Response_Standard:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors_Standard'
+    ValidationErrors_Standard:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error_Standard'
+    AddressComponents_Standard:
+      type: object
+      properties:
+        building_name:
+          type: string
+        building_number:
+          type: string
+        sub_building_name:
+          type: string
+        sub_building_number:
+          type: string
+        company_name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        country:
+          type: string
+    AddressData_Standard:
+      type: object
+      properties:
+        formatted_address:
+          type: string
+        address_components:
+          $ref: '#/components/schemas/AddressComponents_Standard'
+        location:
+          $ref: '#/components/schemas/Location_Standard'
+    Address_Standard:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tag:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressData_Standard'
+        auto_collected:
+          type: boolean
+          writeOnly: true
+    Location_Standard:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Response:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors'
+    ValidationErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Error_WithStatistics:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Response_WithStatistics:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors_WithStatistics'
+    ValidationErrors_WithStatistics:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error_WithStatistics'
+    AddressComponentsPatch_WithStatistics:
+      type: object
+      properties:
+        building_name:
+          type: string
+        building_number:
+          type: string
+        sub_building_name:
+          type: string
+        sub_building_number:
+          type: string
+        company_name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        country:
+          type: string
+    AddressDataPatch_WithStatistics:
+      type: object
+      properties:
+        formatted_address:
+          type: string
+        address_components:
+          $ref: '#/components/schemas/AddressComponentsPatch_WithStatistics'
+        location:
+          $ref: '#/components/schemas/Location_WithStatistics'
+    AddressPatch_WithStatistics:
+      type: object
+      properties:
+        tag:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressDataPatch_WithStatistics'
+    AddressUpdateRequest_WithStatistics:
+      type: object
+      properties:
+        addressToUpdate:
+          $ref: '#/components/schemas/AddressPatch_WithStatistics'
+        address:
+          $ref: '#/components/schemas/AddressPatch_WithStatistics'
+    Location_WithStatistics:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

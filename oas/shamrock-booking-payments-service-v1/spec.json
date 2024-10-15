@@ -1,0 +1,1455 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-booking-payments-service",
+    "version" : "1.0"
+  },
+  "paths" : {
+    "/v1/payment-intents/{payment_intent_id}/complete" : {
+      "post" : {
+        "operationId" : "completePaymentIntent",
+        "parameters" : [ {
+          "name" : "X-Booking-Session",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "payment_intent_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentIntentCompleteRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentIntentCompleteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/tokens/{token_id}/charge" : {
+      "post" : {
+        "operationId" : "createCharge",
+        "parameters" : [ {
+          "name" : "X-Booking-Session",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "token_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChargeRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChargeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-intents" : {
+      "post" : {
+        "operationId" : "createPaymentIntent",
+        "parameters" : [ {
+          "name" : "X-Booking-Session",
+          "in" : "header",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentIntentRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentIntentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/payment-intents/{gateway_id}/config" : {
+      "get" : {
+        "operationId" : "getConfig",
+        "parameters" : [ {
+          "name" : "gateway_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/bookings/{booking_id}/transactions" : {
+      "get" : {
+        "operationId" : "getTransactions",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TransactionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions" : {
+      "get" : {
+        "operationId" : "getTransactions_1",
+        "parameters" : [ {
+          "name" : "from_date",
+          "in" : "query",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "till_date",
+          "in" : "query",
+          "schema" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "booking_status",
+          "in" : "query",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TransactionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/transactions/{transaction_id}/refund" : {
+      "post" : {
+        "operationId" : "refund",
+        "parameters" : [ {
+          "name" : "transaction_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RefundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Charge" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }
+      },
+      "Error" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GatewayToken" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentIntentCompleteResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "payment_token" : {
+            "$ref" : "#/components/schemas/PaymentToken"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/Charge"
+          }
+        }
+      },
+      "PaymentToken" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "off_session_only" : {
+            "type" : "boolean"
+          },
+          "descriptor" : {
+            "type" : "string"
+          },
+          "token" : {
+            "type" : "string"
+          },
+          "gateway_token" : {
+            "$ref" : "#/components/schemas/GatewayToken"
+          }
+        }
+      },
+      "ValidationErrors" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Actor" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "telephone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddressComponents" : {
+        "type" : "object",
+        "properties" : {
+          "company_name" : {
+            "type" : "string"
+          },
+          "building_number" : {
+            "type" : "string"
+          },
+          "sub_building_number" : {
+            "type" : "string"
+          },
+          "building_name" : {
+            "type" : "string"
+          },
+          "sub_building_name" : {
+            "type" : "string"
+          },
+          "street_name" : {
+            "type" : "string"
+          },
+          "postal_code" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Booking" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "booking_channel" : {
+            "type" : "string"
+          },
+          "digital_profile_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "customer" : {
+            "$ref" : "#/components/schemas/Customer"
+          },
+          "customer_reference" : {
+            "$ref" : "#/components/schemas/CustomerReference"
+          },
+          "product" : {
+            "$ref" : "#/components/schemas/Product"
+          },
+          "asap" : {
+            "type" : "boolean"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "deadline_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "time_slot_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "payment_type" : {
+            "type" : "string",
+            "enum" : [ "cash", "credit_card", "invoice" ]
+          },
+          "stops" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Stop"
+            }
+          },
+          "as_directed" : {
+            "type" : "boolean"
+          },
+          "as_directed_duration" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "destination_unknown" : {
+            "type" : "boolean"
+          },
+          "wait_and_return" : {
+            "type" : "boolean"
+          },
+          "passengers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Actor"
+            }
+          },
+          "number_of_passengers" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/Actor"
+          },
+          "instructions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Instruction"
+            }
+          },
+          "extra_luggage" : {
+            "type" : "boolean"
+          },
+          "extra_luggage_pieces" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "meet_and_greet" : {
+            "type" : "boolean"
+          },
+          "price" : {
+            "$ref" : "#/components/schemas/Price"
+          },
+          "discount" : {
+            "$ref" : "#/components/schemas/Discount"
+          }
+        }
+      },
+      "Campaign" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Client" : {
+        "type" : "object",
+        "properties" : {
+          "digitalProfile" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "is_digital_profile" : {
+            "type" : "boolean"
+          },
+          "last_activity_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "CompanyReference" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Coupon" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "campaign" : {
+            "$ref" : "#/components/schemas/Campaign"
+          }
+        }
+      },
+      "Customer" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CustomerReference" : {
+        "type" : "object",
+        "properties" : {
+          "account_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pin_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "client" : {
+            "$ref" : "#/components/schemas/Client"
+          },
+          "company_references" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CompanyReference"
+            }
+          }
+        }
+      },
+      "Discount" : {
+        "type" : "object",
+        "properties" : {
+          "coupon" : {
+            "$ref" : "#/components/schemas/Coupon"
+          },
+          "promotion_code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "DurationFieldType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Flight" : {
+        "type" : "object",
+        "properties" : {
+          "tracking_flight" : {
+            "type" : "boolean"
+          },
+          "delay" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "airline" : {
+            "type" : "string"
+          },
+          "number" : {
+            "type" : "string"
+          },
+          "airport_code" : {
+            "type" : "string"
+          },
+          "arrival_from" : {
+            "type" : "string"
+          },
+          "terminal_code" : {
+            "type" : "string"
+          },
+          "departure_to" : {
+            "type" : "string"
+          },
+          "scheduled_eta" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "GatewayPaymentIntent" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "client_secret" : {
+            "type" : "string"
+          },
+          "ephemeral_key" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Instruction" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lon" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "PaymentIntentCompleteRequest" : {
+        "type" : "object",
+        "properties" : {
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "gateway_payment_intent" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntent"
+          }
+        }
+      },
+      "Period" : {
+        "type" : "object",
+        "properties" : {
+          "seconds" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "years" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "months" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "days" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "hours" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minutes" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "millis" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "weeks" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          },
+          "values" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "period" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "periodInternal" : {
+            "$ref" : "#/components/schemas/ReadablePeriod"
+          },
+          "fieldTypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DurationFieldType"
+            }
+          }
+        }
+      },
+      "PeriodType" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Price" : {
+        "type" : "object",
+        "properties" : {
+          "currency_code" : {
+            "type" : "string"
+          },
+          "total_charged" : {
+            "type" : "number"
+          }
+        }
+      },
+      "Product" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "service_code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ReadablePeriod" : {
+        "type" : "object",
+        "properties" : {
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType"
+          }
+        }
+      },
+      "Stop" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "ADDRESS", "AIRPORT", "TRAIN_STATION" ]
+          },
+          "operation" : {
+            "type" : "string",
+            "enum" : [ "pickup", "drop" ]
+          },
+          "formatted_address" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "collection_delay" : {
+            "$ref" : "#/components/schemas/Period"
+          },
+          "address_components" : {
+            "$ref" : "#/components/schemas/AddressComponents"
+          },
+          "flight" : {
+            "$ref" : "#/components/schemas/Flight"
+          },
+          "actor" : {
+            "$ref" : "#/components/schemas/Actor"
+          },
+          "instructions" : {
+            "type" : "string"
+          },
+          "meeting_point" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AuthenticationContext" : {
+        "type" : "object",
+        "properties" : {
+          "payment_intent" : {
+            "$ref" : "#/components/schemas/PaymentIntent"
+          },
+          "gateway_authentication_context" : {
+            "$ref" : "#/components/schemas/GatewayAuthenticationContext"
+          }
+        }
+      },
+      "ChargeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "charge" : {
+            "$ref" : "#/components/schemas/Charge"
+          },
+          "authentication_context" : {
+            "$ref" : "#/components/schemas/AuthenticationContext"
+          },
+          "confirmation_context" : {
+            "$ref" : "#/components/schemas/ConfirmationContext"
+          }
+        }
+      },
+      "ConfirmationContext" : {
+        "type" : "object",
+        "properties" : {
+          "payment_intent" : {
+            "$ref" : "#/components/schemas/PaymentIntent"
+          },
+          "gateway_confirmation_context" : {
+            "$ref" : "#/components/schemas/GatewayConfirmationContext"
+          }
+        }
+      },
+      "GatewayAuthenticationContext" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GatewayConfirmationContext" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "gateway_payment_intent" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntent"
+          }
+        }
+      },
+      "PaymentIntent" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "gateway_payment_intent" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntent"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "pay", "setup_future_usage", "pay_and_setup_future_usage" ]
+          },
+          "capture_method" : {
+            "type" : "string",
+            "enum" : [ "manual", "auto" ]
+          },
+          "customer_initiated_transaction" : {
+            "type" : "boolean"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number"
+          },
+          "currency_code" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "created", "pending", "requires_authentication", "requires_capture", "succeeded", "failed", "cancelled" ]
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "payment_token" : {
+            "$ref" : "#/components/schemas/PaymentToken"
+          },
+          "refunds" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Refund"
+            }
+          }
+        }
+      },
+      "Refund" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ChargeRequest" : {
+        "type" : "object",
+        "properties" : {
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "moto" : {
+            "type" : "boolean"
+          },
+          "gateway_payment_intent_setup" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntentSetup"
+          }
+        }
+      },
+      "GatewayPaymentIntentSetup" : {
+        "type" : "object",
+        "properties" : {
+          "@type" : {
+            "type" : "string"
+          },
+          "payment_method_configuration" : {
+            "type" : "string"
+          },
+          "customer" : {
+            "$ref" : "#/components/schemas/Customer"
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "PaymentIntentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "payment_intent" : {
+            "$ref" : "#/components/schemas/PaymentIntent"
+          }
+        }
+      },
+      "PaymentIntentRequest" : {
+        "type" : "object",
+        "properties" : {
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "moto" : {
+            "type" : "boolean"
+          },
+          "gateway_payment_intent_setup" : {
+            "$ref" : "#/components/schemas/GatewayPaymentIntentSetup"
+          }
+        }
+      },
+      "Config" : {
+        "type" : "object",
+        "properties" : {
+          "publishable_api_key" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ConfigResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "config" : {
+            "$ref" : "#/components/schemas/Config"
+          }
+        }
+      },
+      "Transaction" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "amount" : {
+            "type" : "number"
+          },
+          "currency_code" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "pending", "requires_authentication", "requires_confirmation", "requires_capture", "collected", "failed", "cancelled", "refunded" ]
+          },
+          "status_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "booking" : {
+            "$ref" : "#/components/schemas/Booking"
+          },
+          "booking_status" : {
+            "type" : "string",
+            "enum" : [ "pending", "booked" ]
+          },
+          "payment_token" : {
+            "$ref" : "#/components/schemas/PaymentToken"
+          },
+          "payment_intent_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "charge_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "refund_id" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        }
+      },
+      "TransactionsResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "transactions" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Transaction"
+            }
+          }
+        }
+      },
+      "RefundResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors"
+          },
+          "refund" : {
+            "$ref" : "#/components/schemas/Refund"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,951 @@
+openapi: 3.0.1
+info:
+  title: shamrock-address-search-service
+  version: "2.17"
+paths:
+  /v2/refine:
+    post:
+      operationId: refine
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/details:
+    post:
+      operationId: details
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/autocomplete:
+    get:
+      operationId: search
+      parameters:
+      - name: search_string
+        in: query
+        schema:
+          type: string
+      - name: search_types
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      - name: preferred_city
+        in: query
+        schema:
+          type: string
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: origin
+        in: query
+        schema:
+          type: string
+      - name: location
+        in: query
+        schema:
+          type: string
+      - name: radius
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: start_index
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: max_results
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    post:
+      operationId: search_1
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutocompleteRequest'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/geocode:
+    get:
+      operationId: geocode
+      parameters:
+      - name: address
+        in: query
+        schema:
+          type: string
+      - name: postcode
+        in: query
+        schema:
+          type: string
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: location
+        in: query
+        schema:
+          type: string
+      - name: latitude
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: longitude
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: radius
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: accuracy
+        in: query
+        schema:
+          type: string
+          enum:
+          - M1
+          - M10
+          - M100
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/providers/all:
+    get:
+      operationId: allProviders
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/providers/enabled:
+    get:
+      operationId: enabledProviders
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/search:
+    get:
+      operationId: search_3
+      parameters:
+      - name: search_string
+        in: query
+        schema:
+          type: string
+      - name: search_types
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      - name: preferred_city
+        in: query
+        schema:
+          type: string
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: postcode
+        in: query
+        schema:
+          type: string
+      - name: search_flats
+        in: query
+        schema:
+          type: boolean
+      - name: search_business_names
+        in: query
+        schema:
+          type: boolean
+      - name: flatten
+        in: query
+        schema:
+          type: boolean
+      - name: start_index
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: max_results
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: providers
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+    post:
+      operationId: search_2
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/search/beneath:
+    get:
+      operationId: searchBeneath
+      parameters:
+      - name: search_flats
+        in: query
+        schema:
+          type: boolean
+      - name: search_business_names
+        in: query
+        schema:
+          type: boolean
+      - name: start_index
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: max_results
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: flatten
+        in: query
+        schema:
+          type: boolean
+      - name: city
+        in: query
+        schema:
+          type: string
+      - name: address_id
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v2/search-nearby:
+    get:
+      operationId: searchNearby
+      parameters:
+      - name: location
+        in: query
+        schema:
+          type: string
+      - name: radius
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NearbyAddressesResponse'
+  /v2/reverse-geocode:
+    get:
+      operationId: reverseGeocode
+      parameters:
+      - name: latitude
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: longitude
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: radius
+        in: query
+        schema:
+          type: number
+          format: double
+      - name: providers
+        in: query
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NearbyAddressesResponse'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Response:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors'
+    ValidationErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Address:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - ADDRESS
+          - FOLDER
+        relevance:
+          type: integer
+          format: int32
+        distance:
+          type: number
+          format: double
+        data:
+          $ref: '#/components/schemas/AddressData'
+        details:
+          $ref: '#/components/schemas/AddressDetails'
+        refined:
+          type: boolean
+    AddressComponents:
+      type: object
+      properties:
+        address:
+          type: string
+        company:
+          type: string
+        building_number:
+          type: string
+        sub_building_number:
+          type: string
+        building_name:
+          type: string
+        sub_building_name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        country:
+          type: string
+    AddressData:
+      type: object
+      properties:
+        formatted_address:
+          type: string
+        address_components:
+          $ref: '#/components/schemas/AddressComponents'
+        location:
+          $ref: '#/components/schemas/Location'
+        notes:
+          type: string
+    AddressDetails:
+      type: object
+      properties:
+        iata:
+          type: string
+        type:
+          type: string
+          enum:
+          - airport
+          - bus_station
+          - train_station
+          - subway_station
+          - hospital
+          - museum
+          - night_club
+          - police
+          - restaurant
+          - school
+          - university
+          - hotel
+          - stadium
+          - shopping_centre
+          - other
+        specifics:
+          type: string
+    Location:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        accuracy:
+          type: string
+          enum:
+          - M1
+          - M10
+          - M100
+    AutocompleteRequest:
+      type: object
+      properties:
+        search_string:
+          type: string
+        search_types:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        country:
+          type: string
+        search_flats:
+          type: boolean
+        search_business_names:
+          type: boolean
+        start_index:
+          type: integer
+          format: int32
+        max_results:
+          type: integer
+          format: int32
+        flatten:
+          type: boolean
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        location_prefs:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        location_prefs_restrictive:
+          type: boolean
+        searchRegion:
+          $ref: '#/components/schemas/CircularRegion'
+        origin:
+          $ref: '#/components/schemas/Location'
+    CircularRegion:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        radius:
+          type: number
+          format: double
+    SearchRequest:
+      type: object
+      properties:
+        search_string:
+          type: string
+        search_types:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        city:
+          type: string
+        postcode:
+          type: string
+        country:
+          type: string
+        search_flats:
+          type: boolean
+        search_business_names:
+          type: boolean
+        start_index:
+          type: integer
+          format: int32
+        max_results:
+          type: integer
+          format: int32
+        flatten:
+          type: boolean
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        location_prefs:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        location_prefs_restrictive:
+          type: boolean
+    NearbyAddressesResponse:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors'
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

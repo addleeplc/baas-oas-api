@@ -1,0 +1,16 @@
+{
+    "services": [
+        "shamrock-account-registry-service",
+        "shamrock-address-book-service",
+        "shamrock-address-search-service",
+        "shamrock-booking-payments-service",
+        "shamrock-booking-receipt-service",
+        "shamrock-booking-registry-service",
+        "shamrock-booking-service",
+        "shamrock-booking-tracking-service",
+        "shamrock-client-registry-service",
+        "shamrock-customer-booking-references-service",
+        "shamrock-payment-wallet-service",
+        "shamrock-product-catalogue-service"
+    ]
+}

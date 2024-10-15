@@ -1,0 +1,450 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "shamrock-booking-tracking-service",
+    "version" : "2.3"
+  },
+  "paths" : {
+    "/v1/bookings/{booking_id}" : {
+      "get" : {
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "booking_id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "pattern" : "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingResponse_Public"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/booking" : {
+      "get" : {
+        "operationId" : "get_1",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pid",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "number",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-ID",
+          "in" : "header",
+          "description" : "Correlation ID attached to the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Service-Name",
+          "in" : "header",
+          "description" : "Name of the service/application component making the request",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "default response",
+            "headers" : {
+              "X-Request-ID" : {
+                "description" : "Correlation id",
+                "required" : true,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingResponse_Public"
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : true
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BookingResponse_Public" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "validation_errors" : {
+            "$ref" : "#/components/schemas/ValidationErrors_Public"
+          },
+          "supplier" : {
+            "$ref" : "#/components/schemas/Supplier_Public"
+          },
+          "driver" : {
+            "$ref" : "#/components/schemas/Driver_Public"
+          },
+          "driver_location" : {
+            "$ref" : "#/components/schemas/LatLon_Public"
+          },
+          "estimates" : {
+            "$ref" : "#/components/schemas/DrivingEstimates_Public"
+          },
+          "stop" : {
+            "$ref" : "#/components/schemas/Stop_Public"
+          },
+          "execution_status" : {
+            "type" : "string",
+            "enum" : [ "UNKNOWN", "BOOKED", "WAITING_ALLOC", "ALLOCATED", "CONFIRMED", "ON_WAY", "AT_PICKUP", "ON_BOARD", "DONE", "CANCELLED", "ON_HOLD" ]
+          },
+          "contact_telephone" : {
+            "type" : "string"
+          },
+          "contact_telephone_type" : {
+            "type" : "string"
+          },
+          "vehicle_image_registry" : {
+            "type" : "string"
+          },
+          "driver_tracking_url" : {
+            "type" : "string"
+          },
+          "execution_progress" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "vehicle_image_id" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Driver_Public" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "callsign" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "pco_licence" : {
+            "type" : "string"
+          },
+          "vehicle" : {
+            "$ref" : "#/components/schemas/Vehicle_Public"
+          }
+        }
+      },
+      "DrivingEstimates_Public" : {
+        "type" : "object",
+        "properties" : {
+          "distance" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "time_estimate" : {
+            "$ref" : "#/components/schemas/Period_Public"
+          }
+        }
+      },
+      "DurationFieldType_Public" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Error_Public" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LatLon_Public" : {
+        "type" : "object",
+        "properties" : {
+          "lon" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lat" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "Location_Public" : {
+        "type" : "object",
+        "properties" : {
+          "lat" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lon" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "accuracy" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "PeriodType_Public" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Period_Public" : {
+        "type" : "object",
+        "properties" : {
+          "seconds" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "years" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "months" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "days" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "hours" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minutes" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "millis" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "weeks" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType_Public"
+          },
+          "values" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "period" : {
+            "$ref" : "#/components/schemas/ReadablePeriod_Public"
+          },
+          "periodInternal" : {
+            "$ref" : "#/components/schemas/ReadablePeriod_Public"
+          },
+          "fieldTypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DurationFieldType_Public"
+            }
+          }
+        }
+      },
+      "ReadablePeriod_Public" : {
+        "type" : "object",
+        "properties" : {
+          "periodType" : {
+            "$ref" : "#/components/schemas/PeriodType_Public"
+          }
+        }
+      },
+      "Stop_Public" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "formatted_address" : {
+            "type" : "string"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location_Public"
+          }
+        }
+      },
+      "Supplier_Public" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ValidationErrors_Public" : {
+        "type" : "object",
+        "properties" : {
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Error_Public"
+            }
+          }
+        }
+      },
+      "Vehicle_Public" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "pid" : {
+            "type" : "string"
+          },
+          "registration_plate" : {
+            "type" : "string"
+          },
+          "manufacturer" : {
+            "type" : "string"
+          },
+          "model" : {
+            "type" : "string"
+          },
+          "colour" : {
+            "type" : "string"
+          },
+          "image_url" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

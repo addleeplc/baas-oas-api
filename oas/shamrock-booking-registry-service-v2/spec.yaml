@@ -1,0 +1,1999 @@
+openapi: 3.0.1
+info:
+  title: shamrock-booking-registry-service
+  version: "2.2"
+paths:
+  /internal/caches/invalidate-all:
+    get:
+      operationId: invalidateAll
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /v1/booking:
+    get:
+      operationId: getJob
+      parameters:
+      - name: id
+        in: query
+        schema:
+          type: string
+      - name: pid
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse_Booking'
+  /v1/bookings/advanced:
+    get:
+      operationId: getPrebooks
+      parameters:
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v1/bookings:
+    get:
+      operationId: getJobs
+      parameters:
+      - name: customer.pid
+        in: query
+        schema:
+          type: string
+      - name: driver.pid
+        in: query
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v1/bookings/{booking_id}:
+    get:
+      operationId: getBooking
+      parameters:
+      - name: booking_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: fetch_plan
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse_Booking'
+  /v1/bookings/{booking_id}/execution_status:
+    get:
+      operationId: getExecutionStatus
+      parameters:
+      - name: booking_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse_ExecutionStatus'
+  /v1/bookings/search:
+    get:
+      operationId: search
+      parameters:
+      - name: booking_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: id
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: number
+        in: query
+        schema:
+          type: string
+      - name: actor_telephone
+        in: query
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: customer.code
+        in: query
+        schema:
+          type: string
+      - name: payment_type
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: product.id
+        in: query
+        schema:
+          type: string
+      - name: driver.id
+        in: query
+        schema:
+          type: string
+      - name: preallocated_driver.id
+        in: query
+        schema:
+          type: string
+      - name: prebooked_by_driver.id
+        in: query
+        schema:
+          type: string
+      - name: asap
+        in: query
+        schema:
+          type: boolean
+      - name: date_confirmed
+        in: query
+        schema:
+          type: boolean
+      - name: cancelled_with_charge
+        in: query
+        schema:
+          type: boolean
+      - name: supplier.id
+        in: query
+        schema:
+          type: string
+      - name: integrator.id
+        in: query
+        schema:
+          type: string
+      - name: view
+        in: query
+        schema:
+          type: string
+      - name: fetch_plan
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v1/clients/{individual_id}/bookings:
+    get:
+      operationId: getBookingsByIndividualPid
+      parameters:
+      - name: individual_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v1/customers/{customer_id}/bookings:
+    get:
+      operationId: getBookingsByCustomerPid
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v1/drivers/{driver_id}/rides:
+    get:
+      operationId: getBookingsByDriverPid
+      parameters:
+      - name: driver_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v2/bookings/advanced:
+    get:
+      operationId: getPrebooks_1
+      parameters:
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v2/bookings/{booking_id}:
+    get:
+      operationId: getBooking_1
+      parameters:
+      - name: booking_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: fetch_plan
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse_Booking'
+  /v2/bookings/{booking_id}/execution_status:
+    get:
+      operationId: getExecutionStatus_1
+      parameters:
+      - name: booking_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse_ExecutionStatus'
+  /v2/bookings/search:
+    get:
+      operationId: search_1
+      parameters:
+      - name: booking_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: id
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: number
+        in: query
+        schema:
+          type: string
+      - name: actor_telephone
+        in: query
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: customer.code
+        in: query
+        schema:
+          type: string
+      - name: payment_type
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: product.id
+        in: query
+        schema:
+          type: string
+      - name: driver.id
+        in: query
+        schema:
+          type: string
+      - name: preallocated_driver.id
+        in: query
+        schema:
+          type: string
+      - name: prebooked_by_driver.id
+        in: query
+        schema:
+          type: string
+      - name: asap
+        in: query
+        schema:
+          type: boolean
+      - name: date_confirmed
+        in: query
+        schema:
+          type: boolean
+      - name: cancelled_with_charge
+        in: query
+        schema:
+          type: boolean
+      - name: supplier.id
+        in: query
+        schema:
+          type: string
+      - name: integrator.id
+        in: query
+        schema:
+          type: string
+      - name: fetch_plan
+        in: query
+        schema:
+          type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+    post:
+      operationId: search_2
+      parameters:
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                number:
+                  type: string
+                actor_telephone:
+                  type: string
+                from_date:
+                  type: string
+                  format: date-time
+                till_date:
+                  type: string
+                  format: date-time
+                status:
+                  type: array
+                  items:
+                    type: string
+                customer.code:
+                  type: string
+                payment_type:
+                  type: array
+                  items:
+                    type: string
+                product.id:
+                  type: string
+                  format: uuid
+                driver.id:
+                  type: string
+                  format: uuid
+                preallocated_driver.id:
+                  type: string
+                  format: uuid
+                prebooked_by_driver.id:
+                  type: string
+                  format: uuid
+                asap:
+                  type: boolean
+                date_confirmed:
+                  type: boolean
+                cancelled_with_charge:
+                  type: boolean
+                supplier.id:
+                  type: string
+                  format: uuid
+                integrator.id:
+                  type: string
+                  format: uuid
+                fetch_plan:
+                  type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "201":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v2/clients/{individual_id}/bookings:
+    get:
+      operationId: getBookingsByIndividualPid_1
+      parameters:
+      - name: individual_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: status
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v2/customers/{customer_id}/bookings:
+    get:
+      operationId: getBookingsByCustomerPid_1
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+  /v2/drivers/{driver_id}/rides:
+    get:
+      operationId: getBookingsByDriverPid_1
+      parameters:
+      - name: driver_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: from_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: till_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: X-Request-ID
+        in: header
+        description: Correlation ID attached to the request
+        required: false
+        schema:
+          type: string
+      - name: X-Service-Name
+        in: header
+        description: Name of the service/application component making the request
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        "200":
+          description: default response
+          headers:
+            X-Request-ID:
+              description: Correlation id
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingsResponse_Booking'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Response:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors'
+    ValidationErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Actor_Booking:
+      type: object
+      properties:
+        name:
+          type: string
+        telephone:
+          type: string
+        email:
+          type: string
+    AddressComponents_Booking:
+      type: object
+      properties:
+        company_name:
+          type: string
+        building_number:
+          type: string
+        street_name:
+          type: string
+        city:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+    Adjustment_Booking:
+      type: object
+      properties:
+        source:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        amount:
+          type: number
+        units:
+          type: number
+    BookingReference_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: string
+        account_id:
+          type: string
+        account_name:
+          type: string
+        product:
+          type: string
+    BookingResponse_Booking:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors_Booking'
+        booking:
+          $ref: '#/components/schemas/Booking_Booking'
+    Booking_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        pid:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        number:
+          type: string
+        booking_channel:
+          type: string
+        booking_date:
+          type: string
+          format: date-time
+        customer:
+          $ref: '#/components/schemas/Customer_Booking'
+        customer_reference:
+          $ref: '#/components/schemas/CustomerReference_Booking'
+        product:
+          $ref: '#/components/schemas/Product_Booking'
+        number_of_passengers:
+          type: integer
+          format: int32
+        payment_type:
+          type: string
+        credit_card:
+          $ref: '#/components/schemas/CreditCard_Booking'
+        contact:
+          $ref: '#/components/schemas/Contact_Booking'
+        asap:
+          type: boolean
+        appearance_date:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        date_confirmed:
+          type: boolean
+        pickup_time_estimate:
+          $ref: '#/components/schemas/Period_Booking'
+        deadline_date:
+          type: string
+          format: date-time
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop_Booking'
+        as_directed:
+          type: boolean
+        destination_unknown:
+          type: boolean
+        wait_and_return:
+          type: boolean
+        extra_luggage:
+          type: boolean
+        meet_and_greet:
+          type: boolean
+        passengers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Actor_Booking'
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction_Booking'
+        price:
+          $ref: '#/components/schemas/Price_Booking'
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Adjustment_Booking'
+        promotion:
+          $ref: '#/components/schemas/Promotion_Booking'
+        driver:
+          $ref: '#/components/schemas/Driver_Booking'
+        preallocated_driver:
+          $ref: '#/components/schemas/Driver_Booking'
+        prebooked_by_driver:
+          $ref: '#/components/schemas/Driver_Booking'
+        allocation_date:
+          type: string
+          format: date-time
+        start_date:
+          type: string
+          format: date-time
+        arrival_date:
+          type: string
+          format: date-time
+        collection_date:
+          type: string
+          format: date-time
+        approach_final_destination_date:
+          type: string
+          format: date-time
+        completion_date:
+          type: string
+          format: date-time
+        cancellation_date:
+          type: string
+          format: date-time
+        cancelled_with_charge:
+          type: boolean
+        waiting_duration:
+          $ref: '#/components/schemas/Period_Booking'
+        journey_distance:
+          type: number
+          format: double
+        journey_distance_units:
+          type: string
+          enum:
+          - miles
+          - kilometers
+          - meters
+        journey_duration:
+          $ref: '#/components/schemas/Period_Booking'
+        integrator:
+          $ref: '#/components/schemas/ThirdParty_Booking'
+        supplier:
+          $ref: '#/components/schemas/ThirdParty_Booking'
+        as_directed_duration:
+          $ref: '#/components/schemas/Period_Booking'
+        execution_status:
+          type: string
+          enum:
+          - UNKNOWN
+          - BOOKED
+          - WAITING_ALLOC
+          - ALLOCATED
+          - CONFIRMED
+          - ON_WAY
+          - AT_PICKUP
+          - ON_BOARD
+          - DONE
+          - CANCELLED
+          - ON_HOLD
+        zone_id:
+          type: string
+          format: uuid
+    Campaign_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        pid:
+          type: string
+    Client_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        pid:
+          type: string
+        name:
+          type: string
+    CompanyReference_Booking:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    Contact_Booking:
+      type: object
+      properties:
+        name:
+          type: string
+        telephone:
+          type: string
+        email:
+          type: string
+    CreditCard_Booking:
+      type: object
+      properties:
+        type:
+          type: string
+        masked_pan:
+          type: string
+        holder_name:
+          type: string
+        expiry_date:
+          type: string
+          format: date-time
+    CustomerReference_Booking:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/Client_Booking'
+        company_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyReference_Booking'
+    Customer_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        pid:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+    Driver_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        pid:
+          type: string
+        callsign:
+          type: string
+        name:
+          type: string
+        mobile_telephone:
+          type: string
+        licence_number:
+          type: string
+        vehicle:
+          $ref: '#/components/schemas/Vehicle_Booking'
+    DurationFieldType_Booking:
+      type: object
+      properties:
+        name:
+          type: string
+    Error_Booking:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Flight_Booking:
+      type: object
+      properties:
+        airline:
+          type: string
+        number:
+          type: string
+        airport_code:
+          type: string
+        terminal_code:
+          type: string
+        arrival_from:
+          type: string
+        departure_to:
+          type: string
+        scheduled_eta:
+          type: string
+          format: date-time
+    Instruction_Booking:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: string
+    Location_Booking:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        accurancy:
+          type: number
+          format: double
+    PeriodType_Booking:
+      type: object
+      properties:
+        name:
+          type: string
+    Period_Booking:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int32
+        years:
+          type: integer
+          format: int32
+        months:
+          type: integer
+          format: int32
+        days:
+          type: integer
+          format: int32
+        hours:
+          type: integer
+          format: int32
+        minutes:
+          type: integer
+          format: int32
+        millis:
+          type: integer
+          format: int32
+        weeks:
+          type: integer
+          format: int32
+        periodType:
+          $ref: '#/components/schemas/PeriodType_Booking'
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
+        period:
+          $ref: '#/components/schemas/ReadablePeriod_Booking'
+        periodInternal:
+          $ref: '#/components/schemas/ReadablePeriod_Booking'
+        fieldTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DurationFieldType_Booking'
+    Price_Booking:
+      type: object
+      properties:
+        definitive:
+          type: boolean
+        settled:
+          type: boolean
+        waiting_for:
+          type: string
+        id:
+          type: string
+        currency_code:
+          type: string
+        base_fare:
+          type: number
+        waiting_fare:
+          type: number
+        waiting_duration:
+          $ref: '#/components/schemas/Period_Booking'
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Adjustment_Booking'
+        discount:
+          type: number
+        taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxItem_Booking'
+        total_charged:
+          type: number
+        duration:
+          $ref: '#/components/schemas/Period_Booking'
+        distance:
+          type: number
+          format: double
+        distance_units:
+          type: string
+          enum:
+          - miles
+          - kilometers
+          - meters
+        base_fare_units:
+          type: number
+        waiting_fare_units:
+          type: number
+        adjustments_fare:
+          type: number
+    Product_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        service_code:
+          type: string
+        type:
+          type: string
+    Promotion_Booking:
+      type: object
+      properties:
+        code:
+          type: string
+        campaign:
+          $ref: '#/components/schemas/Campaign_Booking'
+    ReadablePeriod_Booking:
+      type: object
+      properties:
+        periodType:
+          $ref: '#/components/schemas/PeriodType_Booking'
+    Station_Booking:
+      type: object
+    Stop_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - ADDRESS
+          - AIRPORT
+          - TRAIN_STATION
+        operation:
+          type: string
+        tag:
+          type: string
+        formatted_address:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location_Booking'
+        address_components:
+          $ref: '#/components/schemas/AddressComponents_Booking'
+        station:
+          $ref: '#/components/schemas/Station_Booking'
+        flight:
+          $ref: '#/components/schemas/Flight_Booking'
+        collection_delay:
+          $ref: '#/components/schemas/Period_Booking'
+        actor:
+          $ref: '#/components/schemas/Actor_Booking'
+        meeting_point:
+          type: string
+        instructions:
+          type: string
+        arrival_date:
+          type: string
+          format: date-time
+        completion_date:
+          type: string
+          format: date-time
+        waiting_duration:
+          $ref: '#/components/schemas/Period_Booking'
+        place:
+          type: string
+    TaxItem_Booking:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        source:
+          type: string
+        amount:
+          type: number
+    ThirdParty_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        booking_ref:
+          $ref: '#/components/schemas/BookingReference_Booking'
+        driver_ref:
+          $ref: '#/components/schemas/Driver_Booking'
+    ValidationErrors_Booking:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error_Booking'
+    Vehicle_Booking:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        pid:
+          type: string
+        registration_plate:
+          type: string
+        vehicle_model:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        colour:
+          type: string
+    BookingsResponse_Booking:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors_Booking'
+        bookings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking_Booking'
+    AddressComponents_ExecutionStatus:
+      type: object
+      properties:
+        company_name:
+          type: string
+        building_number:
+          type: string
+        street_name:
+          type: string
+        city:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+    BookingReference_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: string
+        account_id:
+          type: string
+        account_name:
+          type: string
+        product:
+          type: string
+    BookingResponse_ExecutionStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        validation_errors:
+          $ref: '#/components/schemas/ValidationErrors_ExecutionStatus'
+        booking:
+          $ref: '#/components/schemas/Booking_ExecutionStatus'
+    Booking_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        booking_date:
+          type: string
+          format: date-time
+        asap:
+          type: boolean
+        appearance_date:
+          type: string
+          format: date-time
+        date:
+          type: string
+          format: date-time
+        pickup_time_estimate:
+          $ref: '#/components/schemas/Period_ExecutionStatus'
+        deadline_date:
+          type: string
+          format: date-time
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop_ExecutionStatus'
+        driver:
+          $ref: '#/components/schemas/Driver_ExecutionStatus'
+        allocation_date:
+          type: string
+          format: date-time
+        start_date:
+          type: string
+          format: date-time
+        arrival_date:
+          type: string
+          format: date-time
+        collection_date:
+          type: string
+          format: date-time
+        approach_final_destination_date:
+          type: string
+          format: date-time
+        completion_date:
+          type: string
+          format: date-time
+        cancellation_date:
+          type: string
+          format: date-time
+        waiting_duration:
+          $ref: '#/components/schemas/Period_ExecutionStatus'
+        supplier:
+          $ref: '#/components/schemas/ThirdParty_ExecutionStatus'
+        execution_status:
+          type: string
+          enum:
+          - UNKNOWN
+          - BOOKED
+          - WAITING_ALLOC
+          - ALLOCATED
+          - CONFIRMED
+          - ON_WAY
+          - AT_PICKUP
+          - ON_BOARD
+          - DONE
+          - CANCELLED
+          - ON_HOLD
+    Driver_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        pid:
+          type: string
+        callsign:
+          type: string
+        name:
+          type: string
+        mobile_telephone:
+          type: string
+        licence_number:
+          type: string
+        vehicle:
+          $ref: '#/components/schemas/Vehicle_ExecutionStatus'
+    DurationFieldType_ExecutionStatus:
+      type: object
+      properties:
+        name:
+          type: string
+    Error_ExecutionStatus:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    Location_ExecutionStatus:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        accurancy:
+          type: number
+          format: double
+    PeriodType_ExecutionStatus:
+      type: object
+      properties:
+        name:
+          type: string
+    Period_ExecutionStatus:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int32
+        years:
+          type: integer
+          format: int32
+        months:
+          type: integer
+          format: int32
+        days:
+          type: integer
+          format: int32
+        hours:
+          type: integer
+          format: int32
+        minutes:
+          type: integer
+          format: int32
+        millis:
+          type: integer
+          format: int32
+        weeks:
+          type: integer
+          format: int32
+        periodType:
+          $ref: '#/components/schemas/PeriodType_ExecutionStatus'
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
+        period:
+          $ref: '#/components/schemas/ReadablePeriod_ExecutionStatus'
+        periodInternal:
+          $ref: '#/components/schemas/ReadablePeriod_ExecutionStatus'
+        fieldTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DurationFieldType_ExecutionStatus'
+    ReadablePeriod_ExecutionStatus:
+      type: object
+      properties:
+        periodType:
+          $ref: '#/components/schemas/PeriodType_ExecutionStatus'
+    Stop_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        operation:
+          type: string
+        tag:
+          type: string
+        formatted_address:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location_ExecutionStatus'
+        address_components:
+          $ref: '#/components/schemas/AddressComponents_ExecutionStatus'
+        arrival_date:
+          type: string
+          format: date-time
+        completion_date:
+          type: string
+          format: date-time
+        waiting_duration:
+          $ref: '#/components/schemas/Period_ExecutionStatus'
+    ThirdParty_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        booking_ref:
+          $ref: '#/components/schemas/BookingReference_ExecutionStatus'
+        driver_ref:
+          $ref: '#/components/schemas/Driver_ExecutionStatus'
+    ValidationErrors_ExecutionStatus:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error_ExecutionStatus'
+    Vehicle_ExecutionStatus:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        pid:
+          type: string
+        registration_plate:
+          type: string
+        vehicle_model:
+          type: string
+        manufacturer:
+          type: string
+        model:
+          type: string
+        colour:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

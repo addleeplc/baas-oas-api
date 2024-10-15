@@ -1,0 +1,20 @@
+SSH or AWS Workspaces: http://shamrock-inventory-service-v1.addlee-sandbox.org:8056/shamrock-inventory-service/v1/services
+
+'python3 -m http.server 8000',
+'python3 -m venv venv',
+'source venv/bin/activate  # For macOS and Linux',
+'# .\venv\Scripts\activate  # For Windows',
+
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-product-catalogue-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-address-book-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-address-search-service-v2',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-cache-v2',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-payments-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-receipt-service-v3',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-registry-service-v2',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-booking-tracking-service-v2',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-client-registry-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-customer-booking-references-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-payment-wallet-service-v1',
+'https://raw.githubusercontent.com/addleeplc/baas-oas-api/main/oas/shamrock-account-registry-service-v1',
