@@ -1,5 +1,24 @@
 {
-    "shamrock-account-registry-service": [],
+    "shamrock-booking-service": [
+        "shamrock-account-registry-service",
+        "shamrock-account-registry-service.x-api-key",
+        "shamrock-address-search-service",
+        "shamrock-booking-gate",
+        "shamrock-booking-registry-service",
+        "shamrock-flight-schedule-service",
+        "shamrock-product-catalogue-service",
+        "shamrock-product-registry-service",
+        "shamrock-timezone-service",
+        "shamrock-zones-service"
+    ],
+    "shamrock-payment-wallet-service": [
+        "shamrock-account-registry-service",
+        "shamrock-account-registry-service.x-api-key",
+        "shamrock-client-registry-service",
+        "shamrock-client-registry-service.x-api-key",
+        "shamrock-driver-registry-service",
+        "shamrock-payment-service"
+    ],
     "shamrock-address-search-service": [
         "shamrock-address-correction-service",
         "shamrock-as-airports-gate",
@@ -23,42 +42,7 @@
         "shamrock-codepoint-service",
         "shamrock-email-service"
     ],
-    "shamrock-booking-payments-service": [
-        "shamrock-account-registry-service",
-        "shamrock-account-registry-service.x-api-key",
-        "shamrock-client-registry-service",
-        "shamrock-client-registry-service.x-api-key",
-        "shamrock-digital-profiles-service",
-        "shamrock-payment-service"
-    ],
-    "shamrock-booking-receipt-service": [
-        "shamrock-booking-payments-reconciliation-service",
-        "shamrock-booking-registry-service",
-        "shamrock-customer-profile-service",
-        "shamrock-email-service",
-        "shamrock-payment-service",
-        "shamrock-product-registry-service",
-        "shamrock-timezone-service",
-        "shamrock-zones-service"
-    ],
-    "shamrock-booking-registry-service": [
-        "shamrock-driver-cache",
-        "shamrock-product-registry-service",
-        "shamrock-zones-service",
-        "shamrock-zones-service.connectTimeout"
-    ],
-    "shamrock-booking-service": [
-        "shamrock-account-registry-service",
-        "shamrock-account-registry-service.x-api-key",
-        "shamrock-address-search-service",
-        "shamrock-booking-gate",
-        "shamrock-booking-registry-service",
-        "shamrock-flight-schedule-service",
-        "shamrock-product-catalogue-service",
-        "shamrock-product-registry-service",
-        "shamrock-timezone-service",
-        "shamrock-zones-service"
-    ],
+    "shamrock-account-registry-service": [],
     "shamrock-booking-tracking-service": [
         "shamrock-booking-cache",
         "shamrock-customer-profile-service",
@@ -71,16 +55,26 @@
         "shamrock-vehicle-image-registry-service",
         "shamrock-zones-service"
     ],
-    "shamrock-client-registry-service": [],
-    "shamrock-customer-booking-references-service": [],
-    "shamrock-payment-wallet-service": [
+    "shamrock-booking-receipt-service": [
+        "shamrock-booking-payments-reconciliation-service",
+        "shamrock-booking-registry-service",
+        "shamrock-customer-profile-service",
+        "shamrock-email-service",
+        "shamrock-payment-service",
+        "shamrock-product-registry-service",
+        "shamrock-timezone-service",
+        "shamrock-zones-service"
+    ],
+    "shamrock-booking-payments-service": [
         "shamrock-account-registry-service",
         "shamrock-account-registry-service.x-api-key",
         "shamrock-client-registry-service",
         "shamrock-client-registry-service.x-api-key",
-        "shamrock-driver-registry-service",
+        "shamrock-digital-profiles-service",
         "shamrock-payment-service"
     ],
+    "shamrock-customer-booking-references-service": [],
+    "shamrock-client-registry-service": [],
     "shamrock-product-catalogue-service": [
         "shamrock-address-search-service",
         "shamrock-customer-profile-service",
@@ -89,5 +83,11 @@
         "shamrock-product-registry-service",
         "shamrock-travel-policy-service",
         "shamrock-zones-service"
+    ],
+    "shamrock-booking-registry-service": [
+        "shamrock-driver-cache",
+        "shamrock-product-registry-service",
+        "shamrock-zones-service",
+        "shamrock-zones-service.connectTimeout"
     ]
 }

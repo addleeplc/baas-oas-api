@@ -1,78 +1,3 @@
-# import json
-# import networkx as nx
-# from pyvis.network import Network
-
-# def load_json(file_path):
-#     with open(file_path, 'r') as file:
-#         return json.load(file)
-
-# def save_json(data, file_path):
-#     with open(file_path, 'w') as file:
-#         json.dump(data, file, indent=4)
-
-# def extract_and_modify_dependencies(services, public_services):
-#     modified_dependencies = {}
-#     for service in services:
-#         service_name = service['name']
-#         if service_name in public_services:
-#             dependencies = []
-#             for version in service.get('versions', []):
-#                 for dependency in version.get('dependencies', []):
-#                     dependency_name = dependency['name']
-#                     dependencies.append(dependency_name)
-#             modified_dependencies[service_name] = sorted(set(dependencies))
-#     return modified_dependencies
-
-# def generate_dag(dependencies):
-#     G = nx.DiGraph()
-#     for service, deps in dependencies.items():
-#         for dep in deps:
-#             G.add_edge(service, dep)
-#     return G
-
-# def visualize_dag(G, output_file):
-#     net = Network(height='1080px', width='100%', bgcolor='#222222', font_color='white')
-#     net.from_nx(G)
-#     # Customize nodes and edges
-#     for node in net.nodes:
-#         node['color'] = 'lightblue' if 'service' in node['id'] else 'orange'
-#         node['size'] = 20 if 'service' in node['id'] else 10
-    
-#     for edge in net.edges:
-#         edge['color'] = 'gray'
-#         edge['arrows'] = 'orange'
-#     net.show_buttons(filter_=['physics'])
-#     # net.show(output_file)
-    
-#     # Write the HTML content to a file
-#     html_content = net.generate_html()
-#     with open(output_file, 'w') as f:
-#         f.write(html_content)
-
-# def main():
-#     # Load the target services
-#     public_services_data = load_json('al_baas-services.json')
-#     public_services = public_services_data.get('services', [])
-
-#     # Load the services inventory
-#     services_inventory = load_json('al_shamrock-service-inventory.json')
-#     services = services_inventory.get('services', [])
-
-#     # Extract and modify dependencies
-#     modified_dependencies = extract_and_modify_dependencies(services, public_services)
-
-#     # Save the final modified dependencies array to a new JSON file
-#     save_json(modified_dependencies, 'al_baas-modified-dependencies.json')
-
-#     # Generate and visualize the DAG
-#     dag = generate_dag(modified_dependencies)
-#     visualize_dag(dag, 'service_dependencies.html')
-
-# if __name__ == '__main__':
-#     main()
-
-# revision 
-
 import json
 import networkx as nx
 from pyvis.network import Network
@@ -106,7 +31,7 @@ def generate_dag(dependencies):
     return G
 
 def visualize_dag(G, target_services, output_file):
-    net = Network(height='1200px', width='100%', bgcolor='#222222', font_color='white')
+    net = Network(height='1080px', width='100%', bgcolor='#222222', font_color='white')
     net.from_nx(G)
     
     # Set default physics options
@@ -124,7 +49,7 @@ def visualize_dag(G, target_services, output_file):
             },
             "minVelocity": 0.75,
             "solver": "forceAtlas2Based",
-            "timestep": 0.32
+            "timestep": 0.01
         },
         "configure": {
             "enabled": True,
@@ -152,10 +77,40 @@ def visualize_dag(G, target_services, output_file):
         else:
             edge['color'] = 'gray'
     
-    # Write the HTML content to a file
-    html_content = net.generate_html()
-    with open(output_file, 'w') as f:
-        f.write(html_content)
+    # Save the HTML content to a file
+    net.show(output_file)
+
+    # Read the saved HTML content
+    with open(output_file, 'r') as file:
+        html_content = file.read()
+
+    # Add JavaScript for node selection event
+    js_code = """
+    <script type="text/javascript">
+    function addNodeSelectionListener() {
+        network.on("selectNode", function(params) {
+            var selectedNodeId = params.nodes[0];
+            var edges = network.body.data.edges.get();
+            for (var i = 0; i < edges.length; i++) {
+                if (edges[i].from == selectedNodeId || edges[i].to == selectedNodeId) {
+                    network.body.data.edges.update({id: edges[i].id, color: '#fba31b', width:4});
+                } else {
+                    network.body.data.edges.update({id: edges[i].id, color: 'gray'});
+                }
+            }
+        });
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        addNodeSelectionListener();
+    });
+    </script>
+    """
+    # Insert the JavaScript code before the closing </body> tag
+    html_content = html_content.replace("</body>", js_code + "</body>")
+
+    # Write the modified HTML content back to the file
+    with open(output_file, 'w') as file:
+        file.write(html_content)
 
 def main():
     # Load the target services
