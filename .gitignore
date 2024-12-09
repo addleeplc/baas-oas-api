@@ -129,7 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Python venv and other scripts
-.venv/
-*.py
+# # Python venv and other scripts
+# .venv/
+# *.py
 
