@@ -130,6 +130,6 @@ dist
 .pnp.*
 
 # # Python venv and other scripts
-# .venv/
-# *.py
+venv/
+*.py
 
