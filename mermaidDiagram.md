@@ -7,7 +7,6 @@ sequenceDiagram
   participant PC as Product Catalogue Service
   participant CR as Booking References Service
   participant BS as Booking Service
-  participant ED as Eduard
 
   U->>AS: POST /geocode
   AS-->>U: address by location
@@ -23,4 +22,3 @@ sequenceDiagram
   CR-->>U: booking references schema
   U->>BS: POST /bookings
   BS-->>U: booking confirmation or failure reason
-  U-->>ED: Last step 
